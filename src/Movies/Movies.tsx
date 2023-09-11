@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { FETCH_ALL_SHOWS } from '../config';
-
 import MovieCard from "./MovieCard";
 import MoviesTitle from "./MoviesTitle";
 
@@ -12,31 +9,15 @@ interface MovieObject {
   summary: string;
 }
 
-const Movies = () => {
+type Props = {
+  movies: MovieObject[];
+};
 
-  const [moviesData, setMoviesData] = useState<MovieObject[]>([]);
-
-  useEffect(() => {
-    const getMoviesData = async () => {
-      try {
-        const res = await fetch(FETCH_ALL_SHOWS);
-        if (res.ok) {
-          const data = await res.json();
-          setMoviesData(data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getMoviesData();
-  }, []);
- 
-
+const Movies = (props: Props) => {
   const MoviesListUi = (
     <section className="moviesContainer">
-      {moviesData.length !== 0 &&
-        moviesData.map((movie) => {
+      {props.movies.length !== 0 &&
+        props.movies.map((movie) => {
           return (
             <MovieCard
               key={movie.id}
@@ -50,12 +31,12 @@ const Movies = () => {
     </section>
   );
 
-  const Loader = <h2>Please Wait a Moment!</h2>;
+  const Loader = <h2>Sorry, No Movies is Available!</h2>;
 
   return (
     <main>
       <MoviesTitle />
-      {moviesData.length !== 0 ? MoviesListUi : Loader}
+      {props.movies.length !== 0 ? MoviesListUi : Loader}
     </main>
   );
 };
