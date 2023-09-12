@@ -17,7 +17,7 @@ interface MovieObject {
 const App = () => {
   
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentMode, setCurrentMode] = useState("light");
+  const [currentMode, setCurrentMode] = useState("dark");
   const [moviesData, setMoviesData] = useState<MovieObject[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<MovieObject[]>([]);
 

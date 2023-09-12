@@ -1,7 +1,7 @@
 import useTheme from "../Hooks/useTheme";
 import { FaRegSadCry } from "react-icons/fa";
 
-import MovieCard from "./MovieCard";
+import MovieCard from "../Components/MovieCard";
 import MoviesTitle from "./MoviesTitle";
 
 interface MovieObject {

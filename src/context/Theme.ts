@@ -6,6 +6,6 @@ type Para = {
 };
 
 export const ThemeContext = createContext<Para>({
-  mode: "light",
+  mode: "dark",
   modeHandler: () => {},
 });

@@ -16,7 +16,7 @@ const ThemeIcon = () => {
   const theme = useContext(ThemeContext);
   const icon = theme.mode === "light" ? <MdDarkMode size='2rem' /> : <BsFillSunFill size='2rem' />;
 
-  return <div onClick={theme.modeHandler}>{icon}</div>;
+  return <div className="mode" onClick={theme.modeHandler}>{icon}</div>;
 };
 
 const Header = (props: { searchQuery: string; onSearchChange: any }) => {

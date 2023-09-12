@@ -1,5 +1,5 @@
 export const lightTheme = {
-  background: "#ccc",
+  background: "#eee",
   color: "#000",
 };
 export const darkTheme = {
