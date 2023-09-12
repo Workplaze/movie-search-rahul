@@ -118,7 +118,9 @@ code {
 .movieText p {
   margin: 0.5rem 0;
 }
-
+.wrapper {
+  margin: 1rem;
+}
 @media screen and (min-width: 800px) {
   .moviesTitle {
     max-width: 1080px;
@@ -126,6 +128,11 @@ code {
   }
 
   .moviesContainer {
+    margin: 2rem auto;
+    max-width: 1080px;
+  }
+
+  .wrapper{
     margin: 2rem auto;
     max-width: 1080px;
   }

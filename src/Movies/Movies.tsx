@@ -1,3 +1,5 @@
+import {FaRegSadCry} from 'react-icons/fa';
+
 import MovieCard from "./MovieCard";
 import MoviesTitle from "./MoviesTitle";
 
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const Movies = (props: Props) => {
+
   const MoviesListUi = (
     <section className="moviesContainer">
       {props.movies.length !== 0 &&
@@ -31,11 +34,11 @@ const Movies = (props: Props) => {
     </section>
   );
 
-  const Loader = <h2>Sorry, No Movies is Available!</h2>;
+  const Loader = <div className="wrapper"> <h2 >Sorry <FaRegSadCry/>  No Movie is Available!</h2> </div>;
 
   return (
     <main>
-      <MoviesTitle />
+      <MoviesTitle numberOfMovies={props.movies.length} />
       {props.movies.length !== 0 ? MoviesListUi : Loader}
     </main>
   );

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FETCH_ALL_SHOWS } from "./config";
+import { filter } from "./util/filter";
 
 import Header from "./Header/Header";
 import Movies from "./Movies/Movies";
-import { filter } from "./util/filter";
 
 interface MovieObject {
   id: number;
