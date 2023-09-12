@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import {ThemeContext} from '../context/Theme';
 
+import { lightTheme, darkTheme } from "../util/themeStyles";
 import {MdDarkMode} from 'react-icons/md';
 import {BsFillSunFill} from 'react-icons/bs';
 
@@ -9,14 +10,7 @@ import SearchBar from "./SearchBar";
 import MobileMenu from "./MobileMenu";
 import DesktopMenu from "./DesktopMenu";
 
-const lightTheme = {
-  background:'#ccc',
-  color:'#000'
-}
-const darkTheme = {
-  background:'#000',
-  color:'#fff'
-}
+
 
 const ThemeIcon = () => {
   const theme = useContext(ThemeContext);

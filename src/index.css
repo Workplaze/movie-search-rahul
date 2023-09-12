@@ -63,6 +63,12 @@ code {
   font-weight: bold;
 }
 
+
+/* main */
+.main {
+  padding:1rem 0.5rem;
+}
+
 /* Movie Card */
 .moviesContainer {
   margin: 1rem;
