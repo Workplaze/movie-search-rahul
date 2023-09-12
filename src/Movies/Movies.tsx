@@ -1,11 +1,8 @@
-import {FaRegSadCry} from 'react-icons/fa';
-import { ThemeContext } from '../context/Theme';
-
-import { lightTheme,darkTheme } from '../util/themeStyles';
+import useTheme from "../Hooks/useTheme";
+import { FaRegSadCry } from "react-icons/fa";
 
 import MovieCard from "./MovieCard";
 import MoviesTitle from "./MoviesTitle";
-import { useContext } from 'react';
 
 interface MovieObject {
   id: number;
@@ -20,10 +17,7 @@ type Props = {
 };
 
 const Movies = (props: Props) => {
-
-  const theme = useContext(ThemeContext);
-
-  const styles = theme.mode === 'light' ? lightTheme : darkTheme ;
+  const styles = useTheme();
 
   const MoviesListUi = (
     <section className="moviesContainer">
@@ -42,7 +36,13 @@ const Movies = (props: Props) => {
     </section>
   );
 
-  const Loader = <div className="wrapper"> <h2 >Sorry <FaRegSadCry/>  No Movie is Available!</h2> </div>;
+  const Loader = (
+    <div className="wrapper">
+      <h2>
+        Sorry <FaRegSadCry /> No Movie is Available!
+      </h2>
+    </div>
+  );
 
   return (
     <main style={styles}>
