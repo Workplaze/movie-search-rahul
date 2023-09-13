@@ -21,14 +21,20 @@ code {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  border-bottom: 4px solid #a979ff;
+  transition: all 400ms;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.globalHeader > div,
-.searchBar .search {
+.title {
   flex: 1;
+  text-align: center;
 }
 
 .searchBar {
+  flex: 2;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -49,12 +55,17 @@ code {
   outline: none;
 }
 
+.searchBar .search {
+  flex: 1;
+}
+
 .globalHeader .mobileMenu {
   flex-grow: 0;
   text-align: end;
 }
 
 .desktopMenu {
+  flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,13 +74,20 @@ code {
   font-weight: bold;
 }
 
+/* main */
+main {
+  padding: 1rem 0.5rem;
+  min-height: 100vh;
+  transition: all 400ms;
+}
+
 /* Movie Card */
 .moviesContainer {
   margin: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-template-rows: auto;
-  gap: 1rem;
+  gap: 3rem 1.5rem;
 }
 
 .moviesTitle {
@@ -81,7 +99,7 @@ code {
   border-radius: 1em;
   border: 2px solid rgb(255, 255, 255);
   background: #f2f2f2;
-  transition: all 200ms;
+  transition: all 400ms;
 }
 .movieCard:hover,
 .movieCard:active {
@@ -111,7 +129,8 @@ code {
 }
 
 .movieText p {
-  font-size: 0.8rem;
+  text-transform: capitalize;
+  font-size: 0.6rem;
 }
 
 .movieText h2,
@@ -132,7 +151,7 @@ code {
     max-width: 1080px;
   }
 
-  .wrapper{
+  .wrapper {
     margin: 2rem auto;
     max-width: 1080px;
   }

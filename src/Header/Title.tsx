@@ -1,8 +1,7 @@
 const Title = () => {
   return (
-    <div>
-      {" "}
-      <h1> YTS.In</h1>{" "}
+    <div className="title">
+      <h1> YTS.In</h1>
     </div>
   );
 };

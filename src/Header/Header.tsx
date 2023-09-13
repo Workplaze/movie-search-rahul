@@ -1,37 +1,37 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../context/Theme";
+
+import useDevice from "../Hooks/useDevice";
+
+import { MdDarkMode } from "react-icons/md";
+import { BsFillSunFill } from "react-icons/bs";
 
 import Title from "./Title";
 import SearchBar from "./SearchBar";
 import MobileMenu from "./MobileMenu";
 import DesktopMenu from "./DesktopMenu";
+import useTheme from "../Hooks/useTheme";
 
-const Header = (props: {searchQuery : string, onSearchChange: any}) => {
-  
-  const [isMobileVersion, setIsMobileVersion] = useState(true);
+const ThemeIcon = () => {
+  const theme = useContext(ThemeContext);
+  const icon = theme.mode === "light" ? <MdDarkMode size='2rem' /> : <BsFillSunFill size='2rem' />;
 
-  useEffect(() => {
-    const updateMobileView = (): void => {
-      if (window.innerWidth >= 800) {
-        setIsMobileVersion(false);
-      } else {
-        setIsMobileVersion(true);
-      }
-    };
+  return <div className="mode" onClick={theme.modeHandler}>{icon}</div>;
+};
 
-    updateMobileView();
+const Header = (props: { searchQuery: string; onSearchChange: any }) => {
 
-    window.addEventListener("resize", updateMobileView);
-
-    return () => {
-      window.removeEventListener("resize", updateMobileView);
-    };
-
-  }, []);
+  const styles = useTheme();
+  const isMobileVersion = useDevice();
 
   return (
-    <header className="globalHeader">
+    <header className="globalHeader" style={styles}>
       <Title />
-      <SearchBar searchQuery={props.searchQuery} onSearchChange={props.onSearchChange} />
+      <SearchBar
+        searchQuery={props.searchQuery}
+        onSearchChange={props.onSearchChange}
+      />
+      <ThemeIcon />
       {isMobileVersion ? <MobileMenu /> : <DesktopMenu />}
     </header>
   );

@@ -1,6 +1,7 @@
-import {FaRegSadCry} from 'react-icons/fa';
+import useTheme from "../Hooks/useTheme";
+import { FaRegSadCry } from "react-icons/fa";
 
-import MovieCard from "./MovieCard";
+import MovieCard from "../Components/MovieCard";
 import MoviesTitle from "./MoviesTitle";
 
 interface MovieObject {
@@ -16,6 +17,7 @@ type Props = {
 };
 
 const Movies = (props: Props) => {
+  const styles = useTheme();
 
   const MoviesListUi = (
     <section className="moviesContainer">
@@ -34,10 +36,16 @@ const Movies = (props: Props) => {
     </section>
   );
 
-  const Loader = <div className="wrapper"> <h2 >Sorry <FaRegSadCry/>  No Movie is Available!</h2> </div>;
+  const Loader = (
+    <div className="wrapper">
+      <h2>
+        Sorry <FaRegSadCry /> No Movie is Available!
+      </h2>
+    </div>
+  );
 
   return (
-    <main>
+    <main style={styles}>
       <MoviesTitle numberOfMovies={props.movies.length} />
       {props.movies.length !== 0 ? MoviesListUi : Loader}
     </main>

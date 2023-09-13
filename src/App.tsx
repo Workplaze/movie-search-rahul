@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FETCH_ALL_SHOWS } from "./config";
 import { filter } from "./util/filter";
+import {ThemeContext} from './context/Theme';
 
 import Header from "./Header/Header";
 import Movies from "./Movies/Movies";
@@ -16,6 +17,7 @@ interface MovieObject {
 const App = () => {
   
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentMode, setCurrentMode] = useState("dark");
   const [moviesData, setMoviesData] = useState<MovieObject[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<MovieObject[]>([]);
 
@@ -25,6 +27,14 @@ const App = () => {
     setFilteredMovies(result);
     setSearchQuery(value);
   };
+
+  const toggleMode = () => {
+    if(currentMode === 'light') {
+      setCurrentMode('dark');
+    }else {
+      setCurrentMode('light');
+    }
+  }
 
   useEffect(() => {
     const getMoviesData = async () => {
@@ -44,10 +54,10 @@ const App = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <ThemeContext.Provider value={{mode: currentMode, modeHandler:toggleMode}}>
       <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
       <Movies movies={filteredMovies} />
-    </React.Fragment>
+    </ThemeContext.Provider>
   );
 };
 

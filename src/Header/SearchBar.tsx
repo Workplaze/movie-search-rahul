@@ -11,7 +11,7 @@ const SearchBar = (props: { searchQuery: string; onSearchChange: any }) => {
           type="text"
           value={props.searchQuery}
           onChange={(e) => props.onSearchChange(e.target.value)}
-          placeholder="Search for something.."
+          placeholder="Find your entertainment here.."
         />
       </div>
     </div>
