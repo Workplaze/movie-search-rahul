@@ -59,6 +59,10 @@ code {
   flex: 1;
 }
 
+.mode {
+  cursor: pointer;
+}
+
 .globalHeader .mobileMenu {
   flex-grow: 0;
   text-align: end;
