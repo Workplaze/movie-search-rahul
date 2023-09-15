@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import Home from "./pages/Home";
+import User from "./pages/User";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -25,7 +25,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const router = createBrowserRouter([{ path: "", element: <Home/> }]);
+const router = createBrowserRouter([
+  { path: "", element: <Home /> },
+  { path: "/user", element: <User /> },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

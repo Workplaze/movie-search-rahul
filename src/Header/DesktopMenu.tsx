@@ -1,9 +1,13 @@
+import {Link} from 'react-router-dom';
+
 const DesktopMenu = () => {
   return (
     <div className="desktopMenu">
-        <li>Home</li>
+        <Link to={"/user"}>
+          User Page
+        </Link>
         <li>4K</li>
-        <li>Trandig</li>
+        <li>Trending</li>
         <li>Browser Movies</li>
     </div>
   );
