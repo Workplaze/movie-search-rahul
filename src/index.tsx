@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+
+import Home from "./pages/Home";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import {
   ApolloClient,
@@ -22,6 +25,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const router = createBrowserRouter([{ path: "", element: <Home/> }]);
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -29,7 +34,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <RouterProvider router={router} />
     </ApolloProvider>
   </React.StrictMode>
 );
