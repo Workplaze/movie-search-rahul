@@ -1,5 +1,5 @@
+import { ThreeDots } from "react-loader-spinner";
 import { useQuery, gql } from "@apollo/client";
-
 import UserCard from "../Components/UserCard";
 
 const GET_USER = gql`
@@ -16,8 +16,20 @@ const GET_USER = gql`
 `;
 
 const User = () => {
-  const { loading, error, data } = useQuery(GET_USER);
-  const LoadingUI = <h1> Loading...</h1>;
+  const { loading, data } = useQuery(GET_USER);
+  const LoadingUI = (
+    <div className="Loader">
+      <ThreeDots
+        height="80"
+        width="80"
+        radius="9"
+        color="#000"
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{}}
+        visible={true}
+      />
+    </div>
+  );
   const UserList = data?.user?.map((userInfo: any) => (
     <UserCard
       key={userInfo.id}
@@ -28,7 +40,14 @@ const User = () => {
       contact_number={userInfo.contact_number}
     />
   ));
-  return loading ? LoadingUI : UserList;
+  return loading ? (
+    LoadingUI
+  ) : (
+    <div className="user">
+      <h2>User's List</h2>
+      <div className="cardWrapper">{UserList}</div>
+    </div>
+  );
 };
 
 export default User;

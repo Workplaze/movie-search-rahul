@@ -12,6 +12,24 @@ code {
     monospace;
 }
 
+a {
+  color:#fff;
+  text-decoration: none;
+}
+
+a:hover,
+a:active {
+  color:#a979ff;
+  text-decoration: underline;
+}
+
+/* Loader */
+.Loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* Header styles */
 .globalHeader {
   background-color: black;
@@ -105,6 +123,7 @@ main {
   background: #f2f2f2;
   transition: all 400ms;
 }
+
 .movieCard:hover,
 .movieCard:active {
   transform: scale(1.05);
@@ -141,8 +160,45 @@ main {
 .movieText p {
   margin: 0.5rem 0;
 }
+
 .wrapper {
   margin: 1rem;
+}
+
+
+
+/* Card Styles */
+.user {
+  max-width: 1080px;
+  margin: 1rem auto;
+}
+.user h2{
+  padding: 0.5rem 1rem;
+  border-left: 4px solid #000;
+}
+
+.cardWrapper {
+  margin: 2rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: auto;
+  gap: 1rem;
+}
+
+.card {
+  padding: 1rem;
+  border-radius: 1em;
+  background-color: #ffffff;
+  border: 2px solid rgb(215, 205, 205);
+
+}
+
+.cardImage {
+  text-align: center;
+}
+.card img {
+  height: 200px;
+  
 }
 @media screen and (min-width: 800px) {
   .moviesTitle {
@@ -156,6 +212,11 @@ main {
   }
 
   .wrapper {
+    margin: 2rem auto;
+    max-width: 1080px;
+  }
+
+  .cardWrapper {
     margin: 2rem auto;
     max-width: 1080px;
   }

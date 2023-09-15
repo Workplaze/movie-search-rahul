@@ -15,19 +15,22 @@ const UserCard = (props: Props) => {
   const FinalIcon = props.gender === "Male" ? MaleIcon : FemaleIcon;
 
   return (
-    <section>
-      <div>
+    <section className="card">
+      <div className="cardImage">
         <img src={FinalIcon} alt="" />
       </div>
-      <div>
-        <div>{props.first_name}</div>
-        <div> {props.last_name} </div>
-      </div>
-      <div>
-        <SiGmail /> : {props.email}
-      </div>
-      <div>
-        <BsFillTelephoneFill /> : +91 {props.contact_number}
+      <div className="cardContent">
+        <div>
+          <div>
+            {props.first_name} {props.last_name}{" "}
+          </div>
+        </div>
+        <div>
+          <SiGmail /> : {props.email}
+        </div>
+        <div>
+          <BsFillTelephoneFill /> : +91 {props.contact_number}
+        </div>
       </div>
     </section>
   );
