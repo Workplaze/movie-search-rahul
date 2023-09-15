@@ -1,28 +1,33 @@
 import { useQuery, gql } from "@apollo/client";
 
+import UserCard from "../Components/UserCard";
+
 const GET_USER = gql`
   query MyQuery {
     user {
-      first_name
-      age
-      contact_number
-      dob
-      email
-      gender
       id
+      first_name
       last_name
-      role_id
-      status_id
+      gender
+      email
+      contact_number
     }
   }
 `;
 
 const User = () => {
   const { loading, error, data } = useQuery(GET_USER);
-  const LoadingUI = <h1> Loading...</h1>
-  const UserList = data?.user?.map((userInfo: any) => <div key={userInfo.id}>
-    <h2>{userInfo.first_name}</h2>
-  </div>)
+  const LoadingUI = <h1> Loading...</h1>;
+  const UserList = data?.user?.map((userInfo: any) => (
+    <UserCard
+      key={userInfo.id}
+      first_name={userInfo.first_name}
+      last_name={userInfo.last_name}
+      gender={userInfo.gender}
+      email={userInfo.email}
+      contact_number={userInfo.contact_number}
+    />
+  ));
   return loading ? LoadingUI : UserList;
 };
 
