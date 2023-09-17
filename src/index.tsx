@@ -4,6 +4,7 @@ import "./index.css";
 
 import Home from "./pages/Home";
 import User from "./User/User";
+import UserDetails from "./pages/UserDetails";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
@@ -28,6 +29,7 @@ const client = new ApolloClient({
 const router = createBrowserRouter([
   { path: "", element: <Home /> },
   { path: "/user", element: <User /> },
+  { path: "/user/:id", element: <UserDetails /> },
 ]);
 
 const root = ReactDOM.createRoot(

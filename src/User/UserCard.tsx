@@ -1,6 +1,6 @@
-import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { ButtonAction } from "../Components/Button";
+import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 
 import styled from "styled-components";
 
@@ -28,11 +28,13 @@ const UserButtonWrapper = styled(UserCardWrapper)`
   margin: 0;
   gap: 0.5rem;
 `;
+
 type Props = {
   first_name: string;
   last_name: string;
   id: string;
 };
+
 const UserCard = (props: Props) => {
   return (
     <UserCardWrapper>
