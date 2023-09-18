@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ButtonAction } from "../Components/Button";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
-import {DELETE_USER_BY_ID} from '../Queries/queries';
+import { DELETE_USER_BY_ID, GET_USER } from "../Queries/queries";
 
 import styled from "styled-components";
 import Loader from "../Components/Loader";
@@ -16,7 +16,7 @@ const UserCardWrapper = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   & a {
-      font-weight: bold;
+    font-weight: bold;
     display: block;
     width: 100%;
     color: #121212;
@@ -39,11 +39,14 @@ type Props = {
 };
 
 const UserCard = (props: Props) => {
-  const [mutateFunction, {loading}] = useMutation(DELETE_USER_BY_ID);
+  const [mutateFunction, { loading }] = useMutation(DELETE_USER_BY_ID);
   const deleteUserHandler = () => {
-    mutateFunction({variables: {id: props.id}});
-  }
-  if(loading) return <Loader/>
+    mutateFunction({
+      variables: { id: props.id },
+      refetchQueries: [{ query: GET_USER }],
+    });
+  };
+  if (loading) return <Loader />;
   return (
     <UserCardWrapper>
       <Link to={props.id}>
