@@ -32,7 +32,10 @@ export const GET_USER_BY_ID = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation CreateUser($input: user_insert_input!,$userRoleInput: user_role_insert_input!) {
+  mutation CreateUser(
+    $input: user_insert_input!
+    $userRoleInput: user_role_insert_input!
+  ) {
     insert_user_one(object: $input) {
       first_name
       last_name
@@ -50,6 +53,13 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const UPDATE_NAME = gql`
+  mutation UpdateName ($id: uuid!, $first_name: name!, $last_name: name!) {
+    update_user(where: {id: {_eq: $id}}, _set: {first_name:$first_name, last_name: $last_name}) {
+      affected_rows
+    }
+  }
+`;
 
 export const DELETE_USER_BY_ID = gql`
   mutation MyMutation($id: uuid!) {

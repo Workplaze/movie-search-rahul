@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ButtonAction } from "../Components/Button";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { DELETE_USER_BY_ID, GET_USER } from "../Queries/queries";
 
+// Modal
+import { Modal } from "react-responsive-modal";
+
 import styled from "styled-components";
 import Loader from "../Components/Loader";
+import NewUserForm from "./NewUserForm";
+import UpdateUserForm from "./UpdateUserForm";
 
 const UserCardWrapper = styled.div`
   margin: 1rem 0;
@@ -39,7 +45,14 @@ type Props = {
 };
 
 const UserCard = (props: Props) => {
+  const [modalStatus, setModalStatus] = useState(false);
   const [mutateFunction, { loading }] = useMutation(DELETE_USER_BY_ID);
+  const modalCloseHandler = () => {
+    setModalStatus(false);
+  }
+  const modalOpenHandler = () => {
+    setModalStatus(true);
+  }
   const deleteUserHandler = () => {
     mutateFunction({
       variables: { id: props.id },
@@ -53,9 +66,12 @@ const UserCard = (props: Props) => {
         {props.first_name} {props.last_name}
       </Link>
       <UserButtonWrapper>
-        <ButtonAction color="dodgerblue">
+        <ButtonAction onClick={modalOpenHandler} color="dodgerblue">
           Update <AiFillEdit />
         </ButtonAction>
+        {modalStatus && <Modal open={modalStatus} onClose={modalCloseHandler} center>
+            <UpdateUserForm  closeModal={modalCloseHandler} id={props.id} />
+          </Modal>}
         <ButtonAction color="red" onClick={deleteUserHandler}>
           Delete <AiTwotoneDelete />
         </ButtonAction>

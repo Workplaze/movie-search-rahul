@@ -2,38 +2,15 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER, GET_USER } from "../Queries/queries";
 
-import styled from "styled-components";
 import { Button } from "../Components/Button";
 import Loader from "../Components/Loader";
-
-const FormWrapper = styled.section`
-  margin: 1rem 0;
-  padding: 1rem;
-`;
-
-const InputWrapper = styled.div`
-  margin: 0.5rem 0;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin: 0 0 0.5rem;
-  text-transform: capitalize;
-  color: #28292f;
-`;
-
-const InlineLabel = styled(Label)`
-  display: inline-block;
-`;
-
-const Input = styled.input`
-  border: none;
-  background-color: #e0e3f9;
-  color: black;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-`;
+import {
+  FormWrapper,
+  InputWrapper,
+  Label,
+  InlineLabel,
+  Input,
+} from "../Components/Form";
 
 const NewUserForm = (props: { closeModal: () => void }) => {
   const [mutationFn, { loading }] = useMutation(CREATE_USER);
@@ -65,12 +42,12 @@ const NewUserForm = (props: { closeModal: () => void }) => {
           role: "free",
         },
       },
-      refetchQueries:[
+      refetchQueries: [
         {
-            query: GET_USER
-        }
-      ]
-    }, );
+          query: GET_USER,
+        },
+      ],
+    });
   };
 
   if (loading) return <Loader />;
