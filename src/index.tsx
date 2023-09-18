@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
+import 'react-responsive-modal/styles.css';
 import "./index.css";
 
 import Home from "./pages/Home";
