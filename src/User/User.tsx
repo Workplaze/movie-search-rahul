@@ -1,7 +1,7 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { GET_USER } from "../Queries/queries";
+import { GET_USER , CREATE_USER} from "../Queries/queries";
 
 import UserCard from "./UserCard";
 import Loader from "../Components/Loader";
@@ -24,6 +24,28 @@ const UL = styled.ul`
 
 const User = () => {
   const { loading, data } = useQuery(GET_USER);
+  const [mutationFn] = useMutation(CREATE_USER);
+  const createNewUserHandler = () => {
+    console.log("clicked");
+    mutationFn({
+      variables: {
+        input: {
+          first_name: "V",
+          last_name: "R",
+          dob: "2000-12-12",
+          age: "22",
+          contact_number: "9999966666",
+          email: "vrSomething@gmail.com",
+          gender: "Male",
+          role_id: 'd97e22e2-4573-4e6c-a3f4-1893b2fed610',
+          status_id: 'af2e74cd-feec-4f08-b703-8eb7d32ff29e',
+        },
+        userRoleInput: {
+          role: 'free'
+        }
+      },
+    });
+  };
   if (loading) return <Loader />;
   return (
     <React.Fragment>
@@ -32,7 +54,7 @@ const User = () => {
       </TitleWrapper>
       <UserWrapper>
         <div>
-          <ButtonAction color="#000000">
+          <ButtonAction onClick={createNewUserHandler} color="#000000">
             Create New User <IoCreate size={"1rem"} />
           </ButtonAction>
         </div>
