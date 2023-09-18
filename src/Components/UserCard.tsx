@@ -1,6 +1,22 @@
 import { SiGmail } from "react-icons/si";
 import { BsFillTelephoneFill } from "react-icons/bs";
 
+import styled from "styled-components";
+
+const Name = styled.div`
+  color: lime;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+`
+
+const Box = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+`
+
 type Props = {
   first_name: string;
   last_name: string;
@@ -21,16 +37,16 @@ const UserCard = (props: Props) => {
       </div>
       <div className="cardContent">
         <div>
-          <div>
+          <Name>
             {props.first_name} {props.last_name}{" "}
-          </div>
+          </Name>
         </div>
-        <div>
-          <SiGmail /> : {props.email}
-        </div>
-        <div>
-          <BsFillTelephoneFill /> : +91 {props.contact_number}
-        </div>
+        <Box>
+          <SiGmail /> {props.email}
+        </Box>
+        <Box>
+          <BsFillTelephoneFill /> +91 {props.contact_number}
+        </Box>
       </div>
     </section>
   );

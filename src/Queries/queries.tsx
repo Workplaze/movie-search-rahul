@@ -30,3 +30,12 @@ query MyQuery($id: uuid!) {
     }
   }
 }`;
+
+export const DELETE_USER_BY_ID = gql`
+  mutation MyMutation($id: uuid!) {
+    delete_user_by_pk(id: $id) {
+      first_name,
+      last_name
+    }
+  }
+`;
