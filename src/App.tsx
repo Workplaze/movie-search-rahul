@@ -1,64 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { FETCH_ALL_SHOWS } from "./config";
-import { filter } from "./util/filter";
-import {ThemeContext} from './context/Theme';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Header from "./Header/Header";
-import Movies from "./Movies/Movies";
+import Root from "./pages/Root";
+import Home from "./pages/Home";
+import User from "./User/User";
+import UserDetails from "./pages/UserDetails";
 
-interface MovieObject {
-  id: number;
-  name: string;
-  image: string;
-  rating: string;
-  summary: string;
-}
+const router = createBrowserRouter([
+  {
+    path: "",
+    element: <Root />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/user", element: <User /> },
+      { path: "/user/:id", element: <UserDetails /> },
+    ],
+  },
+]);
 
 const App = () => {
-  
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentMode, setCurrentMode] = useState("dark");
-  const [moviesData, setMoviesData] = useState<MovieObject[]>([]);
-  const [filteredMovies, setFilteredMovies] = useState<MovieObject[]>([]);
-
-
-  const searchChangeHandler = (value: string) => {
-    const result = filter(moviesData, value); 
-    setFilteredMovies(result);
-    setSearchQuery(value);
-  };
-
-  const toggleMode = () => {
-    if(currentMode === 'light') {
-      setCurrentMode('dark');
-    }else {
-      setCurrentMode('light');
-    }
-  }
-
-  useEffect(() => {
-    const getMoviesData = async () => {
-      try {
-        const res = await fetch(FETCH_ALL_SHOWS);
-        if (res.ok) {
-          const data = await res.json();
-          setMoviesData(data);
-          setFilteredMovies(data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getMoviesData();
-  }, []);
-
-  return (
-    <ThemeContext.Provider value={{mode: currentMode, modeHandler:toggleMode}}>
-      <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
-      <Movies movies={filteredMovies} />
-    </ThemeContext.Provider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
