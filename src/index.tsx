@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import 'react-responsive-modal/styles.css';
 import "./index.css";
+import 'react-responsive-modal/styles.css';
 
 import Home from "./pages/Home";
 import User from "./User/User";
