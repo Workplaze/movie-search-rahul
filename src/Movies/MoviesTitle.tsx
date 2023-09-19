@@ -1,13 +1,11 @@
 import { MdLocalMovies } from "react-icons/md";
 
-const MoviesTitle = (props: { numberOfMovies: number }) => {
+const MoviesTitle = ({ numberOfMovies }: { numberOfMovies: number }) => {
   return (
     <section className="moviesTitle">
       <div>
         <h2>
-          <MdLocalMovies /> Popular Movies : {
-            props.numberOfMovies
-          } Available
+          <MdLocalMovies /> Popular Movies : {numberOfMovies} Available
         </h2>
         <hr />
       </div>
