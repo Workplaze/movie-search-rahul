@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_USER_BY_ID } from "../Queries/queries";
 import { useParams } from "react-router-dom";
 import Loader from "../Components/Loader";
