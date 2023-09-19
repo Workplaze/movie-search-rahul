@@ -13,13 +13,10 @@ code {
 }
 
 a {
-  color: #fff;
   text-decoration: none;
 }
-
-a:hover,
+a:hover ,
 a:active {
-  color: #a979ff;
   text-decoration: underline;
 }
 
