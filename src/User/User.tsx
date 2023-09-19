@@ -59,6 +59,8 @@ const User = () => {
               first_name={user.first_name}
               last_name={user.last_name}
               id={user.id}
+              role={user.user_role.role}
+              status={user?.user_status?.status}
             />
           ))}
         </UL>

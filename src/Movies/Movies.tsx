@@ -45,10 +45,10 @@ const Movies = ({ movies }: Props) => {
   );
 
   return (
-    <main style={styles}>
+    <>
       <MoviesTitle numberOfMovies={movies?.length} />
       {movies?.length !== 0 ? MoviesListUi : Loader}
-    </main>
+    </>
   );
 };
 

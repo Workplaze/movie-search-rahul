@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
 import useTheme from "../Hooks/useTheme";
-import styled from "styled-components";
-const LinkWithMode = styled.div`
-  & a {
-    color: ${(props) => props.color};
-  }
-`;
+import { LinkWithMode } from "../Common/UI";
 const DesktopMenu = () => {
   const styles = useTheme();
 
