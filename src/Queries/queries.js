@@ -6,6 +6,12 @@ export const GET_USER = gql`
       id
       first_name
       last_name
+      user_role {
+        role
+      }
+      user_status{
+        status
+      }
     }
   }
 `;
