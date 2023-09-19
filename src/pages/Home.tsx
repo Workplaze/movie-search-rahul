@@ -1,7 +1,9 @@
-import App from "../App";
+import { useOutletContext } from "react-router-dom";
+import Movies from "../Movies/Movies";
 
 const Home = () => {
-    return <App/>
-}
+  const [filteredMovies] = useOutletContext<any>();
+  return <Movies movies={filteredMovies} />;
+};
 
 export default Home;
