@@ -37,6 +37,17 @@ export const GET_USER_BY_ID = gql`
   }
 `;
 
+export const GET_USER_ROLE_AND_STATUS = gql`
+  query MyQuery {
+    user_role{
+      role
+    }
+    user_status{
+      status
+    }
+  }
+`
+
 export const CREATE_USER = gql`
   mutation CreateUser(
     $input: user_insert_input!

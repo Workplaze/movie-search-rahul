@@ -2,7 +2,10 @@ import { useState } from "react";
 
 import { useQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { GET_USER } from "../Queries/queries";
+import { FiFilter } from "react-icons/fi";
+import { LuFilterX } from "react-icons/lu";
+
+import { GET_USER, GET_USER_ROLE_AND_STATUS } from "../Queries/queries";
 
 import { Modal } from "react-responsive-modal";
 
@@ -12,6 +15,7 @@ import Loader from "../Components/Loader";
 import { ButtonAction } from "../Components/Button";
 
 import styled from "styled-components";
+import useTheme from "../Hooks/useTheme";
 const UserWrapper = styled.section`
   margin: 1rem auto;
   padding: 1rem;
@@ -24,10 +28,66 @@ const UL = styled.ul`
   padding: 0;
 `;
 
-const User = () => {
+const FilterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #9f72f1;
+`;
 
-  const [modalStatus, setModalStatus] = useState(false);
+const Select = styled.select`
+  display: inline-block;
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+  border-color: #d1d1d1;
+  border-style: solid;
+`;
+
+const FilterMenu = styled.section`
+  display: flex;
+  align-items: center;
+`;
+
+const User = () => {
+  const theme = useTheme();
   const { loading, data } = useQuery(GET_USER);
+  const [filterValues, setFilterValues] = useState({
+    role: "",
+    status: "",
+  });
+  const [modalStatus, setModalStatus] = useState(false);
+  const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
+
+  const filteredUsers =
+    filterValues.role && filterValues.status
+      ? data?.user?.filter(
+          (user: any) =>
+            user?.user_role?.role === filterValues.role &&
+            user?.user_status?.status === filterValues.status
+        )
+      : data?.user;
+  console.log(filteredUsers);
+  const resetFilter = () => {
+    setFilterValues({
+      role: "",
+      status: "",
+    });
+  };
+  const roleChangeHandler = (event: any) => {
+    setFilterValues({
+      ...filterValues,
+      role: event.target.value,
+    });
+  };
+  const statusChangeHandler = (event: any) => {
+    setFilterValues({
+      ...filterValues,
+      status: event.target.value,
+    });
+  };
 
   const closeModalHandler = () => {
     setModalStatus(false);
@@ -39,6 +99,28 @@ const User = () => {
   if (loading) return <Loader />;
   return (
     <UserWrapper>
+      <FilterWrapper style={theme}>
+        <FilterMenu>
+          <FiFilter size={"1.5rem"} /> Filter User
+        </FilterMenu>
+        <FilterMenu>
+          <Select onChange={roleChangeHandler}>
+            {otherData?.user_role?.map((r: any) => (
+              <option key={r.role} value={r.role}>
+                {r.role?.toUpperCase()}
+              </option>
+            ))}
+          </Select>
+          <Select onChange={statusChangeHandler}>
+            {otherData?.user_status?.map((s: any) => (
+              <option key={s.status} value={s.status}>
+                {s.status?.toUpperCase()}
+              </option>
+            ))}
+          </Select>
+          <LuFilterX size={"1.5rem"} onClick={resetFilter} />
+        </FilterMenu>
+      </FilterWrapper>
       <div>
         <ButtonAction onClick={createNewUserHandler} color="#000000">
           Create New User <IoCreate size={"1rem"} />
@@ -53,7 +135,7 @@ const User = () => {
       </div>
       <div>
         <UL>
-          {data?.user?.map((user: any) => (
+          {filteredUsers?.map((user: any) => (
             <UserCard
               key={user.id}
               first_name={user.first_name}
