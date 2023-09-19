@@ -10,7 +10,7 @@ import { Modal } from "react-responsive-modal";
 
 import styled from "styled-components";
 import Loader from "../Components/Loader";
-import NewUserForm from "./NewUserForm";
+// import NewUserForm from "./NewUserForm";
 import UpdateUserForm from "./UpdateUserForm";
 
 const UserCardWrapper = styled.div`

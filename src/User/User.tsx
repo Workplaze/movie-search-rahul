@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { GET_USER, CREATE_USER } from "../Queries/queries";
+import { GET_USER } from "../Queries/queries";
 
 // Modal
 import { Modal } from "react-responsive-modal";
@@ -29,7 +29,7 @@ const UL = styled.ul`
 const User = () => {
   const [modalStatus, setModalStatus] = useState(false);
   const { loading, data } = useQuery(GET_USER);
-  const [mutationFn] = useMutation(CREATE_USER);
+  // const [mutationFn] = useMutation(CREATE_USER);
   const closeModalHandler = () => {
     setModalStatus(false);
   };
