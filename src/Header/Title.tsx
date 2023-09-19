@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
 const Title = () => {
   return (
     <div className="title">
-      <h1> YTS.In</h1>
+      <Link to={"/"}>
+        <h1> YTS.In</h1>
+      </Link>
     </div>
   );
 };
