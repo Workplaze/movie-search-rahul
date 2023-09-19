@@ -5,6 +5,7 @@ import { filter } from "../util/filter";
 import { FETCH_ALL_SHOWS } from "../config";
 import { MovieObject } from "../Common/types";
 import { ThemeContext } from "../context/Theme";
+import { darkTheme, lightTheme } from "../util/themeStyles";
 
 import Header from "../Header/Header";
 
@@ -50,7 +51,9 @@ const Root = () => {
       value={{ mode: currentMode, modeHandler: toggleMode }}
     >
       <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
-      <Outlet context={[filteredMovies]} />
+      <main style={currentMode === "light" ? lightTheme : darkTheme}>
+        <Outlet context={[filteredMovies]} />
+      </main>
     </ThemeContext.Provider>
   );
 };
