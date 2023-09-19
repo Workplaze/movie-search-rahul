@@ -44,6 +44,7 @@ const Select = styled.select`
   padding: 0.5rem;
   border-color: #d1d1d1;
   border-style: solid;
+  
 `;
 
 const FilterMenu = styled.section`

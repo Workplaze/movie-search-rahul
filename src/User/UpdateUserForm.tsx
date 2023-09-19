@@ -8,12 +8,14 @@ import { Button } from "../Components/Button";
 const UpdateUserForm = ({
   id,
   closeModal,
+  defaultValues
 }: {
+  defaultValues: {first_name: string, last_name:string}
   id: string;
   closeModal: () => void;
 }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState(defaultValues.first_name);
+  const [lastName, setLastName] = useState(defaultValues.last_name);
 
   const [updateUserName] = useMutation(UPDATE_NAME);
 

@@ -82,7 +82,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
         </ButtonAction>
         {modalStatus && (
           <Modal open={modalStatus} onClose={modalCloseHandler} center>
-            <UpdateUserForm closeModal={modalCloseHandler} id={id} />
+            <UpdateUserForm defaultValues={{first_name, last_name}} closeModal={modalCloseHandler} id={id} />
           </Modal>
         )}
         <ButtonAction color="red" onClick={deleteUserHandler}>
