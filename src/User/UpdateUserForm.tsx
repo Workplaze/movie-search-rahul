@@ -5,7 +5,13 @@ import { FormWrapper, InputWrapper, Input } from "../Components/Form";
 
 import { Button } from "../Components/Button";
 
-const UpdateUserForm = (props: { id: string; closeModal: () => void }) => {
+const UpdateUserForm = ({
+  id,
+  closeModal,
+}: {
+  id: string;
+  closeModal: () => void;
+}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -15,13 +21,13 @@ const UpdateUserForm = (props: { id: string; closeModal: () => void }) => {
     event.preventDefault();
     updateUserName({
       variables: {
-        id: props.id,
+        id: id,
         first_name: firstName,
         last_name: lastName,
       },
-      refetchQueries: [{ query: GET_USER_BY_ID, variables: { id: props.id } }],
+      refetchQueries: [{ query: GET_USER_BY_ID, variables: { id } }],
     });
-    props.closeModal();
+    closeModal();
   };
 
   return (

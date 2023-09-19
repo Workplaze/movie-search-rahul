@@ -44,34 +44,36 @@ type Props = {
   id: string;
 };
 
-const UserCard = (props: Props) => {
+const UserCard = ({ id, first_name, last_name }: Props) => {
   const [modalStatus, setModalStatus] = useState(false);
   const [mutateFunction, { loading }] = useMutation(DELETE_USER_BY_ID);
   const modalCloseHandler = () => {
     setModalStatus(false);
-  }
+  };
   const modalOpenHandler = () => {
     setModalStatus(true);
-  }
+  };
   const deleteUserHandler = () => {
     mutateFunction({
-      variables: { id: props.id },
+      variables: { id },
       refetchQueries: [{ query: GET_USER }],
     });
   };
   if (loading) return <Loader />;
   return (
     <UserCardWrapper>
-      <Link to={props.id}>
-        {props.first_name} {props.last_name}
+      <Link to={id}>
+        {first_name} {last_name}
       </Link>
       <UserButtonWrapper>
         <ButtonAction onClick={modalOpenHandler} color="dodgerblue">
           Update <AiFillEdit />
         </ButtonAction>
-        {modalStatus && <Modal open={modalStatus} onClose={modalCloseHandler} center>
-            <UpdateUserForm  closeModal={modalCloseHandler} id={props.id} />
-          </Modal>}
+        {modalStatus && (
+          <Modal open={modalStatus} onClose={modalCloseHandler} center>
+            <UpdateUserForm closeModal={modalCloseHandler} id={id} />
+          </Modal>
+        )}
         <ButtonAction color="red" onClick={deleteUserHandler}>
           Delete <AiTwotoneDelete />
         </ButtonAction>

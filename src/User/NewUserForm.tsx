@@ -12,7 +12,7 @@ import {
   Input,
 } from "../Components/Form";
 
-const NewUserForm = (props: { closeModal: () => void }) => {
+const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
   const [mutationFn, { loading }] = useMutation(CREATE_USER);
 
   const [firstName, setFirstName] = useState("");
@@ -24,7 +24,7 @@ const NewUserForm = (props: { closeModal: () => void }) => {
 
   const formSubmitHandler = (event: any) => {
     event.preventDefault();
-    props.closeModal();
+    closeModal();
     mutationFn({
       variables: {
         input: {

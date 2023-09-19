@@ -16,13 +16,13 @@ type Props = {
   movies: MovieObject[];
 };
 
-const Movies = (props: Props) => {
+const Movies = ({ movies }: Props) => {
   const styles = useTheme();
 
   const MoviesListUi = (
     <section className="moviesContainer">
-      {props.movies.length !== 0 &&
-        props.movies.map((movie) => {
+      {movies?.length !== 0 &&
+        movies?.map((movie) => {
           return (
             <MovieCard
               key={movie.id}
@@ -46,8 +46,8 @@ const Movies = (props: Props) => {
 
   return (
     <main style={styles}>
-      <MoviesTitle numberOfMovies={props.movies.length} />
-      {props.movies.length !== 0 ? MoviesListUi : Loader}
+      <MoviesTitle numberOfMovies={movies?.length} />
+      {movies?.length !== 0 ? MoviesListUi : Loader}
     </main>
   );
 };

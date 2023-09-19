@@ -5,17 +5,17 @@ import styled from "styled-components";
 
 const Name = styled.div`
   color: lime;
-    font-size: 2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-`
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+`;
 
 const Box = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
   margin: 0.5rem 0;
-`
+`;
 
 type Props = {
   first_name: string;
@@ -25,10 +25,16 @@ type Props = {
   contact_number: string;
 };
 
-const UserCard = (props: Props) => {
+const UserCard = ({
+  first_name,
+  last_name,
+  gender,
+  email,
+  contact_number,
+}: Props) => {
   const MaleIcon = require("../Assets/male.png");
   const FemaleIcon = require("../Assets/female.png");
-  const FinalIcon = props.gender === "Male" ? MaleIcon : FemaleIcon;
+  const FinalIcon = gender === "Male" ? MaleIcon : FemaleIcon;
 
   return (
     <section className="card">
@@ -38,14 +44,14 @@ const UserCard = (props: Props) => {
       <div className="cardContent">
         <div>
           <Name>
-            {props.first_name} {props.last_name}{" "}
+            {first_name} {last_name}{" "}
           </Name>
         </div>
         <Box>
-          <SiGmail /> {props.email}
+          <SiGmail /> {email}
         </Box>
         <Box>
-          <BsFillTelephoneFill /> +91 {props.contact_number}
+          <BsFillTelephoneFill /> +91 {contact_number}
         </Box>
       </div>
     </section>

@@ -14,23 +14,34 @@ import useTheme from "../Hooks/useTheme";
 
 const ThemeIcon = () => {
   const theme = useContext(ThemeContext);
-  const icon = theme.mode === "light" ? <MdDarkMode size='2rem' /> : <BsFillSunFill size='2rem' />;
+  const icon =
+    theme.mode === "light" ? (
+      <MdDarkMode size="2rem" />
+    ) : (
+      <BsFillSunFill size="2rem" />
+    );
 
-  return <div className="mode" onClick={theme.modeHandler}>{icon}</div>;
+  return (
+    <div className="mode" onClick={theme.modeHandler}>
+      {icon}
+    </div>
+  );
 };
 
-const Header = (props: { searchQuery: string; onSearchChange: any }) => {
-
+const Header = ({
+  searchQuery,
+  onSearchChange,
+}: {
+  searchQuery: string;
+  onSearchChange: any;
+}) => {
   const styles = useTheme();
   const isMobileVersion = useDevice();
 
   return (
     <header className="globalHeader" style={styles}>
       <Title />
-      <SearchBar
-        searchQuery={props.searchQuery}
-        onSearchChange={props.onSearchChange}
-      />
+      <SearchBar searchQuery={searchQuery} onSearchChange={onSearchChange} />
       <ThemeIcon />
       {isMobileVersion ? <MobileMenu /> : <DesktopMenu />}
     </header>
