@@ -15,11 +15,10 @@ import {
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "https://evolving-fowl-65.hasura.app/v1/graphql",
+    uri: process.env.REACT_APP_URI,
     headers: {
       "Content-Type": "application/json",
-      "x-hasura-admin-secret":
-        "5acGklXa4Ag73Oaik5K85Kzj2gA6NhXCQB2YTxBJO8PBd1g0EjMjIcDP6EzUsUIF",
+      "x-hasura-admin-secret": `${process.env.REACT_APP_KEY}`,
     },
   }),
   cache: new InMemoryCache(),
