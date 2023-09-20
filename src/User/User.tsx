@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { useQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { FiFilter } from "react-icons/fi";
 import { LuFilterX } from "react-icons/lu";
 
 import { GET_USER, GET_USER_ROLE_AND_STATUS } from "../Queries/queries";
@@ -102,7 +101,7 @@ const User = () => {
     <UserWrapper>
       <FilterWrapper style={theme}>
         <FilterMenu>
-          <FiFilter size={"1.5rem"} /> Filter User
+           Filter User
         </FilterMenu>
         <FilterMenu>
           <Select onChange={roleChangeHandler}>

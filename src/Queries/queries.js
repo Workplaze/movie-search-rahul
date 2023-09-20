@@ -9,7 +9,23 @@ export const GET_USER = gql`
       user_role {
         role
       }
-      user_status{
+      user_status {
+        status
+      }
+    }
+  }
+`;
+
+export const GET_USER_BY_ROLE_ID_AND_STATUS_ID = gql`
+  query MyQuery($roleID: String!, $statusID: String!) {
+    user(where: { role_id: { _eq: $roleID }, status_id: { _eq: $statusID } }) {
+      first_name
+      last_name
+      id
+      user_role {
+        role
+      }
+      user_status {
         status
       }
     }
@@ -39,14 +55,16 @@ export const GET_USER_BY_ID = gql`
 
 export const GET_USER_ROLE_AND_STATUS = gql`
   query MyQuery {
-    user_role{
+    user_role {
+      id
       role
     }
-    user_status{
+    user_status {
+      id
       status
     }
   }
-`
+`;
 
 export const CREATE_USER = gql`
   mutation CreateUser(
@@ -71,8 +89,11 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_NAME = gql`
-  mutation UpdateName ($id: uuid!, $first_name: name!, $last_name: name!) {
-    update_user(where: {id: {_eq: $id}}, _set: {first_name:$first_name, last_name: $last_name}) {
+  mutation UpdateName($id: uuid!, $first_name: name!, $last_name: name!) {
+    update_user(
+      where: { id: { _eq: $id } }
+      _set: { first_name: $first_name, last_name: $last_name }
+    ) {
       affected_rows
     }
   }
