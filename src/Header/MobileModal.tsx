@@ -53,7 +53,7 @@ const MobileModal = ({ closeModal }: { closeModal: () => void }) => {
           <AiFillCloseCircle size={"2rem"} onClick={closeModal} />
         </span>
       </MenuHeader>
-      <MenuBody>
+      <MenuBody onClick={closeModal}>
         <LinkWithMode color={theme.color}>
           <Link to={"/user"}>Our Users</Link>
         </LinkWithMode>
