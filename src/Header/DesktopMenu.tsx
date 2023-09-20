@@ -7,16 +7,16 @@ const DesktopMenu = () => {
   return (
     <div className="desktopMenu">
       <LinkWithMode color={styles.color}>
-        <Link to={"/user"}> User Page </Link>
+        <Link to={"/user"}> Our Users </Link>
       </LinkWithMode>
       <LinkWithMode color={styles.color}>
-        <Link to={""}> 4K </Link>
+        <Link to={""}> 4K Movies </Link>
       </LinkWithMode>
       <LinkWithMode color={styles.color}>
         <Link to={""}> Trending </Link>
       </LinkWithMode>
       <LinkWithMode color={styles.color}>
-        <Link to={""}> Browse Movies </Link>
+        <Link to={""}> Hindi Movies </Link>
       </LinkWithMode>
     </div>
   );
