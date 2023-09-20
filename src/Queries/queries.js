@@ -17,7 +17,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_BY_ROLE_ID_AND_STATUS_ID = gql`
-  query MyQuery($roleID: String!, $statusID: String!) {
+  query MyQuery($roleID: uuid!, $statusID: uuid!) {
     user(where: { role_id: { _eq: $roleID }, status_id: { _eq: $statusID } }) {
       first_name
       last_name
