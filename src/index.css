@@ -15,9 +15,13 @@ code {
 a {
   text-decoration: none;
 }
-a:hover ,
+/* a:hover ,
 a:active {
   text-decoration: underline;
+} */
+
+a.active {
+  border-bottom: #a979ff 4px solid;
 }
 
 /* Loader */

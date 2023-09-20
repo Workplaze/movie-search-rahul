@@ -13,6 +13,8 @@ const Wrapper = styled.section<{ $bgColor: string; $color: string }>`
   z-index: 111000;
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
+  border-bottom: 15px solid #993bf7;
+  border-radius: 10px;
 `;
 
 const MenuHeader = styled.div`
@@ -58,13 +60,13 @@ const MobileModal = ({ closeModal }: { closeModal: () => void }) => {
           <Link to={"/user"}>Our Users</Link>
         </LinkWithMode>
         <LinkWithMode color={theme.color}>
-          <Link to={""}>4K Videos</Link>
+          <Link to={"/4kVideos"}>4K Cinema</Link>
         </LinkWithMode>
         <LinkWithMode color={theme.color}>
-          <Link to={""}>Trending Movies</Link>
+          <Link to={"/"}>Latest Movies</Link>
         </LinkWithMode>
         <LinkWithMode color={theme.color}>
-          <Link to={""}> Hindi Movies</Link>
+          <Link to={"/hindiMovies"}> Hindi Movies</Link>
         </LinkWithMode>
       </MenuBody>
     </Wrapper>
