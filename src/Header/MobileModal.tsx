@@ -32,13 +32,14 @@ const MenuBody = styled.div`
   text-align: center;
   & a {
     display: block;
+    transition: transform 400ms;
     padding: 0.5rem 1rem;
     margin: 0.5rem 1rem;
     font-weight: bold;
   }
   & a:hover,
   & a:active {
-    border-bottom: 2px solid;
+    transform: scale(1.1);
   }
 `;
 
