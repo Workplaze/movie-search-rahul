@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
-import { useQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { FiFilter } from "react-icons/fi";
-import { LuFilterX } from "react-icons/lu";
+import { FcFilledFilter, FcClearFilters } from "react-icons/fc";
 
-import { GET_USER, GET_USER_ROLE_AND_STATUS } from "../Queries/queries";
+import {
+  GET_USER,
+  GET_USER_ROLE_AND_STATUS,
+  GET_USER_BY_ROLE_ID_AND_STATUS_ID,
+} from "../Queries/queries";
 
 import { Modal } from "react-responsive-modal";
 
@@ -16,6 +19,8 @@ import { ButtonAction } from "../Components/Button";
 
 import styled from "styled-components";
 import useTheme from "../Hooks/useTheme";
+import { TextWithIconWrapper } from "../Common/UI";
+
 const UserWrapper = styled.section`
   margin: 1rem auto;
   padding: 1rem;
@@ -40,54 +45,70 @@ const FilterWrapper = styled.div`
 
 const Select = styled.select`
   display: inline-block;
-  margin: 0 0.5rem;
-  padding: 0.5rem;
+  margin: 0 0.4rem;
+  padding: 0.5rem 0;
+  border-radius: 0.5rem;
   border-color: #d1d1d1;
   border-style: solid;
-  
+  & option {
+    padding: 1rem;
+    text-transform: capitalize;
+  }
 `;
 
 const FilterMenu = styled.section`
+  margin-left: auto;
   display: flex;
   align-items: center;
 `;
 
+const FilterTitle = styled.div`
+  font-weight: bold;
+  text-transform: capitalize;
+`;
+
+const FilterButtons = styled.div`
+  @media (min-width: 800px) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+`;
+
+const NoUser = styled.div`
+  text-align: center;
+  font-weight: bold;
+  margin: 2rem 0;
+`;
+
 const User = () => {
+
   const theme = useTheme();
-  const { loading, data } = useQuery(GET_USER);
-  const [filterValues, setFilterValues] = useState({
-    role: "",
-    status: "",
-  });
+  const [isFiltered, setIsFiltered] = useState(false);
   const [modalStatus, setModalStatus] = useState(false);
+  const roleRef = useRef<HTMLSelectElement | null>(null);
+  const statusRef = useRef<HTMLSelectElement | null>(null);
+
+  const { loading, data } = useQuery(GET_USER);
+
   const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
 
-  const filteredUsers =
-    filterValues.role && filterValues.status
-      ? data?.user?.filter(
-          (user: any) =>
-            user?.user_role?.role === filterValues.role &&
-            user?.user_status?.status === filterValues.status
-        )
-      : data?.user;
-  console.log(filteredUsers);
-  const resetFilter = () => {
-    setFilterValues({
-      role: "",
-      status: "",
-    });
+  const [getData, { loading: filterLoading, data: filterData }] = useLazyQuery(
+    GET_USER_BY_ROLE_ID_AND_STATUS_ID
+  );
+
+  const clearFilterHandler = () => {
+    setIsFiltered(false);
   };
-  const roleChangeHandler = (event: any) => {
-    setFilterValues({
-      ...filterValues,
-      role: event.target.value,
+
+  const applyFilterHandler = () => {
+    getData({
+      variables: {
+        roleID: roleRef?.current?.value,
+        statusID: statusRef?.current?.value,
+      },
     });
-  };
-  const statusChangeHandler = (event: any) => {
-    setFilterValues({
-      ...filterValues,
-      status: event.target.value,
-    });
+    setIsFiltered(true);
   };
 
   const closeModalHandler = () => {
@@ -97,30 +118,40 @@ const User = () => {
     setModalStatus(true);
   };
 
-  if (loading) return <Loader />;
+  if (loading || filterLoading) return <Loader />;
+
   return (
     <UserWrapper>
       <FilterWrapper style={theme}>
+        <FilterTitle>Filter User</FilterTitle>
         <FilterMenu>
-          <FiFilter size={"1.5rem"} /> Filter User
-        </FilterMenu>
-        <FilterMenu>
-          <Select onChange={roleChangeHandler}>
+          <Select ref={roleRef}>
             {otherData?.user_role?.map((r: any) => (
-              <option key={r.role} value={r.role}>
-                {r.role?.toUpperCase()}
+              <option key={r.id} value={r.id}>
+                {r.role}
               </option>
             ))}
           </Select>
-          <Select onChange={statusChangeHandler}>
+          <Select ref={statusRef}>
             {otherData?.user_status?.map((s: any) => (
-              <option key={s.status} value={s.status}>
-                {s.status?.toUpperCase()}
+              <option key={s.id} value={s.id}>
+                {s.status}
               </option>
             ))}
           </Select>
-          <LuFilterX size={"1.5rem"} onClick={resetFilter} />
         </FilterMenu>
+        <FilterButtons>
+          <ButtonAction onClick={applyFilterHandler}>
+            <TextWithIconWrapper>
+              <FcFilledFilter size={"1.5rem"} /> Apply
+            </TextWithIconWrapper>
+          </ButtonAction>
+          <ButtonAction onClick={clearFilterHandler}>
+            <TextWithIconWrapper>
+              <FcClearFilters size={"1.5rem"} /> Clear
+            </TextWithIconWrapper>
+          </ButtonAction>
+        </FilterButtons>
       </FilterWrapper>
       <div>
         <ButtonAction onClick={createNewUserHandler} color="#000000">
@@ -136,16 +167,31 @@ const User = () => {
       </div>
       <div>
         <UL>
-          {filteredUsers?.map((user: any) => (
-            <UserCard
-              key={user.id}
-              first_name={user.first_name}
-              last_name={user.last_name}
-              id={user.id}
-              role={user.user_role.role}
-              status={user?.user_status?.status}
-            />
-          ))}
+          {!isFiltered &&
+            data?.user?.map((u: any) => (
+              <UserCard
+                key={u.id}
+                first_name={u.first_name}
+                last_name={u.last_name}
+                id={u.id}
+                role={u.user_role.role}
+                status={u?.user_status?.status}
+              />
+            ))}
+          {isFiltered &&
+            filterData?.user?.map((u: any) => (
+              <UserCard
+                key={u.id}
+                first_name={u.first_name}
+                last_name={u.last_name}
+                id={u.id}
+                role={u.user_role.role}
+                status={u?.user_status?.status}
+              />
+            ))}
+          {isFiltered && filterData?.user?.length === 0 && (
+            <NoUser>Sorry, No User Found!</NoUser>
+          )}
         </UL>
       </div>
     </UserWrapper>

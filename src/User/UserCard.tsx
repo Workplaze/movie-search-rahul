@@ -3,36 +3,36 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ButtonAction } from "../Components/Button";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
+import { FcApproval, FcDecision } from "react-icons/fc";
 import { DELETE_USER_BY_ID, GET_USER } from "../Queries/queries";
 
-// Modal
+
 import { Modal } from "react-responsive-modal";
 
 import styled from "styled-components";
 import Loader from "../Components/Loader";
-// import NewUserForm from "./NewUserForm";
 import UpdateUserForm from "./UpdateUserForm";
 import useTheme from "../Hooks/useTheme";
-import { LinkWithMode } from "../Common/UI";
+import { LinkWithMode, TextWithIconWrapper } from "../Common/UI";
 
-const UserCardWrapper = styled.div`
+const UserCardWrapper = styled.div<{ $bgColor?: string }>`
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  /* & a {
+  & a {
     font-weight: bold;
     display: block;
     width: 100%;
-    color: #121212;
+    color: ${(props) => props.$bgColor};
   }
 
   & a:hover {
     text-decoration: underline;
-  } */
+  }
 `;
 
 const UserButtonWrapper = styled(UserCardWrapper)`
@@ -52,7 +52,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
   const theme = useTheme();
   const [modalStatus, setModalStatus] = useState(false);
 
-  const [mutateFunction, { loading }] = useMutation(DELETE_USER_BY_ID);
+  const [deleteUser, { loading }] = useMutation(DELETE_USER_BY_ID);
 
   const modalCloseHandler = () => {
     setModalStatus(false);
@@ -62,7 +62,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
   };
 
   const deleteUserHandler = () => {
-    mutateFunction({
+    deleteUser({
       variables: { id },
       refetchQueries: [{ query: GET_USER }],
     });
@@ -70,11 +70,14 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
 
   if (loading) return <Loader />;
   return (
-    <UserCardWrapper color={theme.color}>
+    <UserCardWrapper $bgColor={theme.background} color={theme.color}>
       <LinkWithMode color={theme?.background}>
-      <Link to={id}>
-        {first_name} {last_name} 
-      </Link>
+        <Link to={id}>
+          <TextWithIconWrapper>
+            {first_name} {last_name}
+            {status === "registered" ? <FcApproval /> : <FcDecision />}
+          </TextWithIconWrapper>
+        </Link>
       </LinkWithMode>
       <UserButtonWrapper>
         <ButtonAction onClick={modalOpenHandler} color="dodgerblue">
@@ -82,7 +85,11 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
         </ButtonAction>
         {modalStatus && (
           <Modal open={modalStatus} onClose={modalCloseHandler} center>
-            <UpdateUserForm defaultValues={{first_name, last_name}} closeModal={modalCloseHandler} id={id} />
+            <UpdateUserForm
+              defaultValues={{ first_name, last_name }}
+              closeModal={modalCloseHandler}
+              id={id}
+            />
           </Modal>
         )}
         <ButtonAction color="red" onClick={deleteUserHandler}>

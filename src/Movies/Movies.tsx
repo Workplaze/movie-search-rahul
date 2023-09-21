@@ -1,4 +1,4 @@
-import useTheme from "../Hooks/useTheme";
+// import useTheme from "../Hooks/useTheme";
 import { FaRegSadCry } from "react-icons/fa";
 
 import MovieCard from "../Components/MovieCard";
@@ -17,7 +17,7 @@ type Props = {
 };
 
 const Movies = ({ movies }: Props) => {
-  const styles = useTheme();
+  // const styles = useTheme();
 
   const MoviesListUi = (
     <section className="moviesContainer">
