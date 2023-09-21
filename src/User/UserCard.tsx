@@ -6,12 +6,11 @@ import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { FcApproval, FcDecision } from "react-icons/fc";
 import { DELETE_USER_BY_ID, GET_USER } from "../Queries/queries";
 
-// Modal
+
 import { Modal } from "react-responsive-modal";
 
 import styled from "styled-components";
 import Loader from "../Components/Loader";
-// import NewUserForm from "./NewUserForm";
 import UpdateUserForm from "./UpdateUserForm";
 import useTheme from "../Hooks/useTheme";
 import { LinkWithMode, TextWithIconWrapper } from "../Common/UI";
