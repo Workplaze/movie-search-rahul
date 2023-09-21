@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_USER = gql`
-  query MyQuery {
+  query getUser {
     user {
       id
       first_name
@@ -17,7 +17,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_BY_ROLE_ID_AND_STATUS_ID = gql`
-  query MyQuery($roleID: uuid!, $statusID: uuid!) {
+  query getUserByRoleAndStatus($roleID: uuid!, $statusID: uuid!) {
     user(where: { role_id: { _eq: $roleID }, status_id: { _eq: $statusID } }) {
       first_name
       last_name
@@ -33,7 +33,7 @@ export const GET_USER_BY_ROLE_ID_AND_STATUS_ID = gql`
 `;
 
 export const GET_USER_BY_ID = gql`
-  query MyQuery($id: uuid!) {
+  query getUserById($id: uuid!) {
     user_by_pk(id: $id) {
       id
       first_name
@@ -54,7 +54,7 @@ export const GET_USER_BY_ID = gql`
 `;
 
 export const GET_USER_ROLE_AND_STATUS = gql`
-  query MyQuery {
+  query getUserRoleAndStatus {
     user_role {
       id
       role
@@ -100,7 +100,7 @@ export const UPDATE_NAME = gql`
 `;
 
 export const DELETE_USER_BY_ID = gql`
-  mutation MyMutation($id: uuid!) {
+  mutation deleteUserById($id: uuid!) {
     delete_user_by_pk(id: $id) {
       first_name
       last_name
