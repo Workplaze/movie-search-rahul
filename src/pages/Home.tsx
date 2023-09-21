@@ -1,7 +1,11 @@
 import { useOutletContext } from "react-router-dom";
+
 import styled from "styled-components";
+
 import Movies from "../Movies/Movies";
 import useTheme from "../Hooks/useTheme";
+import { V_INFO } from "../util/constant";
+
 
 const HeroWrapper = styled.section<{ $color: string; $bgColor: string }>`
   background-color: ${(props) => props.$bgColor};
@@ -26,7 +30,7 @@ const HeroContent = styled.div`
     text-transform: capitalize;
   }
   & span {
-    color:#a979ff;
+    color: #a979ff;
   }
   & p {
     text-transform: capitalize;
@@ -44,12 +48,7 @@ const Home = () => {
           <h1>
             V-<span>Enjoy </span>
           </h1>
-          <p>
-            Welcome to the official V-Enjoy, your premier online movie streaming
-            web app. Explore a vast collection of high-quality movies in 720p,
-            1080p, 2160p 4K, and immersive 3D experiences, all available in
-            compact file sizes. Discover the world of V-Enjoy Movies today!
-          </p>
+          <p>{V_INFO}</p>
         </HeroContent>
       </HeroWrapper>
       <Movies movies={filteredMovies} />
