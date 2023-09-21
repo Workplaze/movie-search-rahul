@@ -1,6 +1,6 @@
-import { useState, useRef, ChangeEvent } from "react";
-
+import { useState, useRef } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
+
 import { IoCreate } from "react-icons/io5";
 import { FcFilledFilter, FcClearFilters } from "react-icons/fc";
 
@@ -79,23 +79,28 @@ const NoUser = styled.div`
   text-align: center;
   font-weight: bold;
   margin: 2rem 0;
-`
+`;
 
 const User = () => {
-  const theme = useTheme();
 
+  const theme = useTheme();
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
   const roleRef = useRef<HTMLSelectElement | null>(null);
   const statusRef = useRef<HTMLSelectElement | null>(null);
 
   const { loading, data } = useQuery(GET_USER);
+
+  const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
+
   const [getData, { loading: filterLoading, data: filterData }] = useLazyQuery(
     GET_USER_BY_ROLE_ID_AND_STATUS_ID
   );
 
-  const [isFiltered, setIsFiltered] = useState(false);
   const clearFilterHandler = () => {
     setIsFiltered(false);
   };
+
   const applyFilterHandler = () => {
     getData({
       variables: {
@@ -106,16 +111,6 @@ const User = () => {
     setIsFiltered(true);
   };
 
-  const [modalStatus, setModalStatus] = useState(false);
-  const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
-
-  const roleChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.innerHTML);
-  };
-  const statusChangeHandler = (event: any) => {
-    // console.log(statusRef.current.value);
-  };
-
   const closeModalHandler = () => {
     setModalStatus(false);
   };
@@ -124,21 +119,20 @@ const User = () => {
   };
 
   if (loading || filterLoading) return <Loader />;
+
   return (
     <UserWrapper>
       <FilterWrapper style={theme}>
         <FilterTitle>Filter User</FilterTitle>
         <FilterMenu>
-          <Select ref={roleRef} onChange={roleChangeHandler}>
-           
+          <Select ref={roleRef}>
             {otherData?.user_role?.map((r: any) => (
               <option key={r.id} value={r.id}>
                 {r.role}
               </option>
             ))}
           </Select>
-          <Select ref={statusRef} onChange={statusChangeHandler}>
-           j
+          <Select ref={statusRef}>
             {otherData?.user_status?.map((s: any) => (
               <option key={s.id} value={s.id}>
                 {s.status}
@@ -195,7 +189,9 @@ const User = () => {
                 status={u?.user_status?.status}
               />
             ))}
-            {isFiltered && filterData?.user?.length === 0 && <NoUser>Sorry, No User Found!</NoUser> }
+          {isFiltered && filterData?.user?.length === 0 && (
+            <NoUser>Sorry, No User Found!</NoUser>
+          )}
         </UL>
       </div>
     </UserWrapper>
