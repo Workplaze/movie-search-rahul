@@ -14,7 +14,7 @@ import {
 
 const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
   
-  const [mutationFn, { loading }] = useMutation(CREATE_USER);
+  const [createNewUser, { loading }] = useMutation(CREATE_USER);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,7 +26,7 @@ const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
   const formSubmitHandler = (event: any) => {
     event.preventDefault();
     closeModal();
-    mutationFn({
+    createNewUser({
       variables: {
         input: {
           first_name: firstName,

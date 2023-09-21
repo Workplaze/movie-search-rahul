@@ -52,7 +52,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
   const theme = useTheme();
   const [modalStatus, setModalStatus] = useState(false);
 
-  const [mutateFunction, { loading }] = useMutation(DELETE_USER_BY_ID);
+  const [deleteUser, { loading }] = useMutation(DELETE_USER_BY_ID);
 
   const modalCloseHandler = () => {
     setModalStatus(false);
@@ -62,7 +62,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
   };
 
   const deleteUserHandler = () => {
-    mutateFunction({
+    deleteUser({
       variables: { id },
       refetchQueries: [{ query: GET_USER }],
     });
