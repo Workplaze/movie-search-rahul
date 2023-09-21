@@ -2,8 +2,6 @@ import { useState, useRef, ChangeEvent } from "react";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
-import { LuFilterX } from "react-icons/lu";
-
 import { FcFilledFilter, FcClearFilters } from "react-icons/fc";
 
 import {
@@ -47,13 +45,19 @@ const FilterWrapper = styled.div`
 
 const Select = styled.select`
   display: inline-block;
-  margin: 0 0.5rem;
-  padding: 0.5rem;
+  margin: 0 0.4rem;
+  padding: 0.5rem 0;
+  border-radius: 0.5rem;
   border-color: #d1d1d1;
   border-style: solid;
+  & option {
+    padding: 1rem;
+    text-transform: capitalize;
+  }
 `;
 
 const FilterMenu = styled.section`
+  margin-left: auto;
   display: flex;
   align-items: center;
 `;
@@ -129,7 +133,7 @@ const User = () => {
            
             {otherData?.user_role?.map((r: any) => (
               <option key={r.id} value={r.id}>
-                {r.role?.toUpperCase()}
+                {r.role}
               </option>
             ))}
           </Select>
@@ -137,7 +141,7 @@ const User = () => {
            j
             {otherData?.user_status?.map((s: any) => (
               <option key={s.id} value={s.id}>
-                {s.status?.toUpperCase()}
+                {s.status}
               </option>
             ))}
           </Select>
