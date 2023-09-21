@@ -5,7 +5,7 @@ const Hindi = () => {
   return (
     <DoubleContainer>
       <TextWithIconWrapper>
-        <MdMusicVideo size={'2rem'} /> <h2> Just a moment, Hindi Movies coming soon.... </h2>
+        <MdMusicVideo size={'2rem'} /> <h2>  Hindi Movies coming soon.... </h2>
       </TextWithIconWrapper>{" "}
     </DoubleContainer>
   );

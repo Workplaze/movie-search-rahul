@@ -5,7 +5,7 @@ const MoviesTitle = ({ numberOfMovies }: { numberOfMovies: number }) => {
     <section className="moviesTitle">
       <div>
         <h2>
-          <MdLocalMovies /> Popular Movies : {numberOfMovies} Available
+          <MdLocalMovies /> Latest Movies : {numberOfMovies} Available
         </h2>
         <hr />
       </div>

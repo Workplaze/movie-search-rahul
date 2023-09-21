@@ -1,4 +1,4 @@
-import { useState, useRef , ChangeEvent} from "react";
+import { useState, useRef, ChangeEvent } from "react";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { IoCreate } from "react-icons/io5";
@@ -22,6 +22,7 @@ import { ButtonAction } from "../Components/Button";
 import styled from "styled-components";
 import useTheme from "../Hooks/useTheme";
 import { TextWithIconWrapper } from "../Common/UI";
+
 const UserWrapper = styled.section`
   margin: 1rem auto;
   padding: 1rem;
@@ -57,6 +58,25 @@ const FilterMenu = styled.section`
   align-items: center;
 `;
 
+const FilterTitle = styled.div`
+  font-weight: bold;
+  text-transform: capitalize;
+`;
+
+const FilterButtons = styled.div`
+  @media (min-width: 800px) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+`;
+
+const NoUser = styled.div`
+  text-align: center;
+  font-weight: bold;
+  margin: 2rem 0;
+`
+
 const User = () => {
   const theme = useTheme();
 
@@ -84,9 +104,9 @@ const User = () => {
 
   const [modalStatus, setModalStatus] = useState(false);
   const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
- 
+
   const roleChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+    console.log(event.target.innerHTML);
   };
   const statusChangeHandler = (event: any) => {
     // console.log(statusRef.current.value);
@@ -103,10 +123,10 @@ const User = () => {
   return (
     <UserWrapper>
       <FilterWrapper style={theme}>
-        <FilterMenu>Filter User</FilterMenu>
+        <FilterTitle>Filter User</FilterTitle>
         <FilterMenu>
           <Select ref={roleRef} onChange={roleChangeHandler}>
-            <option value="N/A">Select Role</option>
+           
             {otherData?.user_role?.map((r: any) => (
               <option key={r.id} value={r.id}>
                 {r.role?.toUpperCase()}
@@ -114,26 +134,26 @@ const User = () => {
             ))}
           </Select>
           <Select ref={statusRef} onChange={statusChangeHandler}>
-            <option value="N/A">Select Status</option>
+           j
             {otherData?.user_status?.map((s: any) => (
               <option key={s.id} value={s.id}>
                 {s.status?.toUpperCase()}
               </option>
             ))}
           </Select>
-          <div>
-            <ButtonAction onClick={applyFilterHandler}>
-              <TextWithIconWrapper>
-                Apply <FcFilledFilter />
-              </TextWithIconWrapper>
-            </ButtonAction>
-            <ButtonAction onClick={clearFilterHandler}>
-              <TextWithIconWrapper>
-                Clear <FcClearFilters />
-              </TextWithIconWrapper>
-            </ButtonAction>
-          </div>
         </FilterMenu>
+        <FilterButtons>
+          <ButtonAction onClick={applyFilterHandler}>
+            <TextWithIconWrapper>
+              <FcFilledFilter size={"1.5rem"} /> Apply
+            </TextWithIconWrapper>
+          </ButtonAction>
+          <ButtonAction onClick={clearFilterHandler}>
+            <TextWithIconWrapper>
+              <FcClearFilters size={"1.5rem"} /> Clear
+            </TextWithIconWrapper>
+          </ButtonAction>
+        </FilterButtons>
       </FilterWrapper>
       <div>
         <ButtonAction onClick={createNewUserHandler} color="#000000">
@@ -171,16 +191,7 @@ const User = () => {
                 status={u?.user_status?.status}
               />
             ))}
-          {/* {filteredUsers?.map((user: any) => (
-            <UserCard
-              key={user.id}
-              first_name={user.first_name}
-              last_name={user.last_name}
-              id={user.id}
-              role={user.user_role.role}
-              status={user?.user_status?.status}
-            />
-          ))} */}
+            {isFiltered && filterData?.user?.length === 0 && <NoUser>Sorry, No User Found!</NoUser> }
         </UL>
       </div>
     </UserWrapper>

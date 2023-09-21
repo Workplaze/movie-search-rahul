@@ -16,5 +16,5 @@ export const DoubleContainer = styled.div`
 export const TextWithIconWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.3rem;
 `;
