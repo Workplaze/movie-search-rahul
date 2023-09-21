@@ -13,6 +13,7 @@ import {
 } from "../Components/Form";
 
 const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
+  
   const [mutationFn, { loading }] = useMutation(CREATE_USER);
 
   const [firstName, setFirstName] = useState("");
