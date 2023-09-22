@@ -8,6 +8,7 @@ import { ThemeContext } from "../context/Theme";
 import { darkTheme, lightTheme } from "../util/themeStyles";
 
 import Header from "../Header/Header";
+import Filter from "../context/FilterContext";
 
 const Root = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,9 +52,11 @@ const Root = () => {
       value={{ mode: currentMode, modeHandler: toggleMode }}
     >
       <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
-      <main style={currentMode === "light" ? lightTheme : darkTheme}>
-        <Outlet context={[filteredMovies]} />
-      </main>
+      <Filter>
+        <main style={currentMode === "light" ? lightTheme : darkTheme}>
+          <Outlet context={[filteredMovies]} />
+        </main>
+      </Filter>
     </ThemeContext.Provider>
   );
 };

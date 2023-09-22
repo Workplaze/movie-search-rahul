@@ -16,9 +16,9 @@ export const GET_USER = gql`
   }
 `;
 
-export const GET_USER_BY_ROLE_ID_AND_STATUS_ID = gql`
-  query getUserByRoleAndStatus($roleID: uuid!, $statusID: uuid!) {
-    user(where: { role_id: { _eq: $roleID }, status_id: { _eq: $statusID } }) {
+export const GET_USER_BY_ROLE_AND_STATUS = gql`
+  query getUserByRoleAndStatus($role: String!, $status: String!) {
+    user(where: {user_role: {role : {_eq: $role}}, user_status: {status: {_eq: $status}} }) {
       first_name
       last_name
       id

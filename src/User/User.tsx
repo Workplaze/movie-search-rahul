@@ -1,25 +1,26 @@
-import { useState, useRef } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useState, useContext } from "react";
+import { useQuery } from "@apollo/client";
+import useTheme from "../Hooks/useTheme";
 
 import { IoCreate } from "react-icons/io5";
-import { FcFilledFilter, FcClearFilters } from "react-icons/fc";
+import { FcClearFilters } from "react-icons/fc";
 
 import {
   GET_USER,
   GET_USER_ROLE_AND_STATUS,
-  GET_USER_BY_ROLE_ID_AND_STATUS_ID,
+  GET_USER_BY_ROLE_AND_STATUS,
 } from "../Queries/queries";
 
 import { Modal } from "react-responsive-modal";
+import { FilterContext } from "../context/FilterContext";
 
 import UserCard from "./UserCard";
 import NewUserForm from "./NewUserForm";
 import Loader from "../Components/Loader";
-import { ButtonAction } from "../Components/Button";
 
 import styled from "styled-components";
-import useTheme from "../Hooks/useTheme";
 import { TextWithIconWrapper } from "../Common/UI";
+import { ButtonAction } from "../Components/Button";
 
 const UserWrapper = styled.section`
   margin: 1rem auto;
@@ -82,35 +83,26 @@ const NoUser = styled.div`
 `;
 
 const User = () => {
-
   const theme = useTheme();
-  const [isFiltered, setIsFiltered] = useState(false);
+  const contextFilter = useContext(FilterContext);
   const [modalStatus, setModalStatus] = useState(false);
-  const roleRef = useRef<HTMLSelectElement | null>(null);
-  const statusRef = useRef<HTMLSelectElement | null>(null);
 
+  const isFiltered = contextFilter?.state.isFiltered;
   const { loading, data } = useQuery(GET_USER);
-
   const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
-
-  const [getData, { loading: filterLoading, data: filterData }] = useLazyQuery(
-    GET_USER_BY_ROLE_ID_AND_STATUS_ID
+  const { loading: filterLoading, data: filterData } = useQuery(
+    GET_USER_BY_ROLE_AND_STATUS,
+    {
+      variables: {
+        role: contextFilter?.state.role,
+        status: contextFilter?.state.status,
+      },
+    }
   );
 
   const clearFilterHandler = () => {
-    setIsFiltered(false);
+    contextFilter?.dispatch({ type: "clearFilter" });
   };
-
-  const applyFilterHandler = () => {
-    getData({
-      variables: {
-        roleID: roleRef?.current?.value,
-        statusID: statusRef?.current?.value,
-      },
-    });
-    setIsFiltered(true);
-  };
-
   const closeModalHandler = () => {
     setModalStatus(false);
   };
@@ -125,27 +117,38 @@ const User = () => {
       <FilterWrapper style={theme}>
         <FilterTitle>Filter User</FilterTitle>
         <FilterMenu>
-          <Select ref={roleRef}>
+          <Select
+            value={contextFilter?.state.role}
+            onChange={(e) =>
+              contextFilter?.dispatch({
+                type: "updateRole",
+                payload: { value: e.target.value },
+              })
+            }
+          >
             {otherData?.user_role?.map((r: any) => (
-              <option key={r.id} value={r.id}>
+              <option key={r.id} value={r.role}>
                 {r.role}
               </option>
             ))}
           </Select>
-          <Select ref={statusRef}>
+          <Select
+            value={contextFilter?.state.status}
+            onChange={(e) =>
+              contextFilter?.dispatch({
+                type: "updateStatus",
+                payload: { value: e.target.value },
+              })
+            }
+          >
             {otherData?.user_status?.map((s: any) => (
-              <option key={s.id} value={s.id}>
+              <option key={s.id} value={s.status}>
                 {s.status}
               </option>
             ))}
           </Select>
         </FilterMenu>
         <FilterButtons>
-          <ButtonAction onClick={applyFilterHandler}>
-            <TextWithIconWrapper>
-              <FcFilledFilter size={"1.5rem"} /> Apply
-            </TextWithIconWrapper>
-          </ButtonAction>
           <ButtonAction onClick={clearFilterHandler}>
             <TextWithIconWrapper>
               <FcClearFilters size={"1.5rem"} /> Clear
