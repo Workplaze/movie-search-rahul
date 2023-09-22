@@ -69,7 +69,6 @@ export const GET_USER_ROLE_AND_STATUS = gql`
 export const CREATE_USER = gql`
   mutation CreateUser(
     $input: user_insert_input!
-    $userRoleInput: user_role_insert_input!
   ) {
     insert_user_one(object: $input) {
       first_name
@@ -81,9 +80,6 @@ export const CREATE_USER = gql`
       gender
       role_id
       status_id
-    }
-    insert_user_role_one(object: $userRoleInput) {
-      role
     }
   }
 `;
