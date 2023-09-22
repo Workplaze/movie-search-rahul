@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { CREATE_USER, GET_USER } from "../Queries/queries";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  CREATE_USER,
+  GET_USER,
+  GET_USER_ROLE_AND_STATUS,
+} from "../Queries/queries";
 
 import { Button } from "../Components/Button";
 import Loader from "../Components/Loader";
@@ -12,16 +16,36 @@ import {
   Input,
 } from "../Components/Form";
 
-const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
-  
-  const [createNewUser, { loading }] = useMutation(CREATE_USER);
+import { toast } from "react-toastify";
 
+const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
+  const [createNewUser, { loading }] = useMutation(CREATE_USER);
+  const { data } = useQuery(GET_USER_ROLE_AND_STATUS);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
+  const [gender, setGender] = useState("Male");
+  const [userRole, setUserRole] = useState("");
+  const [userStatus, setUserStatus] = useState("");
+
+  const selectGenderHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGender(event.target.value);
+  };
+
+  const handleUserRoleChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setUserRole(event.target.value);
+  };
+
+  const handleUserStatusChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setUserStatus(event.target.value);
+  };
 
   const formSubmitHandler = (event: any) => {
     event.preventDefault();
@@ -35,12 +59,9 @@ const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
           age: age,
           contact_number: contact,
           email: email,
-          gender: "Male",
-          role_id: "d97e22e2-4573-4e6c-a3f4-1893b2fed610",
-          status_id: "af2e74cd-feec-4f08-b703-8eb7d32ff29e",
-        },
-        userRoleInput: {
-          role: "free",
+          gender,
+          role_id: userRole,
+          status_id: userStatus,
         },
       },
       refetchQueries: [
@@ -49,6 +70,7 @@ const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
         },
       ],
     });
+    toast.success("Created!");
   };
 
   if (loading) return <Loader />;
@@ -97,15 +119,59 @@ const NewUserForm = ({closeModal}: { closeModal: () => void }) => {
           <Label htmlFor="gender"> Gender </Label>
           <div>
             <div>
-              <Input type="radio" id="male" />
+              <Input
+                type="radio"
+                id="male"
+                name="gender"
+                value={"Male"}
+                checked={gender === "Male"}
+                onChange={selectGenderHandler}
+              />
               <InlineLabel htmlFor="male"> Male </InlineLabel>
             </div>
             <div>
-              <Input type="radio" id="female" />
+              <Input
+                type="radio"
+                id="female"
+                name="gender"
+                value={"Female"}
+                checked={gender === "Female"}
+                onChange={selectGenderHandler}
+              />
               <InlineLabel htmlFor="female"> Female </InlineLabel>
             </div>
           </div>
         </InputWrapper>
+
+        <section>
+          <label htmlFor="userRole">User Role:</label>
+          <select
+            id="userRole"
+            name="userRole"
+            value={userRole}
+            onChange={handleUserRoleChange}
+          >
+            {data?.user_role?.map((r: any) => (
+              <option key={r.id} value={r.id}>
+                {r.role}
+              </option>
+            ))}
+          </select>
+
+          <label htmlFor="userStatus">User Status:</label>
+          <select
+            id="userStatus"
+            name="userStatus"
+            value={userStatus}
+            onChange={handleUserStatusChange}
+          >
+            {data?.user_status?.map((s: any) => (
+              <option key={s.id} value={s.id}>
+                {s.status}
+              </option>
+            ))}
+          </select>
+        </section>
 
         <InputWrapper>
           <Input

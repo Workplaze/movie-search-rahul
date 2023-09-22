@@ -6,7 +6,7 @@ import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 import { FcApproval, FcDecision } from "react-icons/fc";
 import { DELETE_USER_BY_ID, GET_USER } from "../Queries/queries";
 
-
+import { toast } from "react-toastify";
 import { Modal } from "react-responsive-modal";
 
 import styled from "styled-components";
@@ -66,6 +66,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
       variables: { id },
       refetchQueries: [{ query: GET_USER }],
     });
+    toast.success("User Deleted!");
   };
 
   if (loading) return <Loader />;

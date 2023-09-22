@@ -2,15 +2,16 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_NAME, GET_USER_BY_ID } from "../Queries/queries";
 import { FormWrapper, InputWrapper, Input } from "../Components/Form";
+import { toast } from "react-toastify";
 
 import { Button } from "../Components/Button";
 
 const UpdateUserForm = ({
   id,
   closeModal,
-  defaultValues
+  defaultValues,
 }: {
-  defaultValues: {first_name: string, last_name:string}
+  defaultValues: { first_name: string; last_name: string };
   id: string;
   closeModal: () => void;
 }) => {
@@ -30,6 +31,7 @@ const UpdateUserForm = ({
       refetchQueries: [{ query: GET_USER_BY_ID, variables: { id } }],
     });
     closeModal();
+    toast.success("User Date Updated!");
   };
 
   return (

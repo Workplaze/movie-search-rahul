@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { filter } from "../util/filter";
 import { FETCH_ALL_SHOWS } from "../config";
 import { MovieObject } from "../Common/types";
@@ -51,6 +54,7 @@ const Root = () => {
     <ThemeContext.Provider
       value={{ mode: currentMode, modeHandler: toggleMode }}
     >
+      <ToastContainer autoClose={2000} position={'top-center'} />
       <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
       <Filter>
         <main style={currentMode === "light" ? lightTheme : darkTheme}>
