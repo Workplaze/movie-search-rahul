@@ -8,7 +8,7 @@ import { ThemeContext } from "../context/Theme";
 import { darkTheme, lightTheme } from "../util/themeStyles";
 
 import Header from "../Header/Header";
-import Filter from "../context/FilterFeature";
+import Filter from "../context/FilterContext";
 
 const Root = () => {
   const [searchQuery, setSearchQuery] = useState("");
