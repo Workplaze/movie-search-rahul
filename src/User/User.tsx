@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import useTheme from "../Hooks/useTheme";
 
 import { IoCreate } from "react-icons/io5";
-import { FcFilledFilter, FcClearFilters } from "react-icons/fc";
+import { FcClearFilters } from "react-icons/fc";
 
 import {
   GET_USER,
@@ -82,10 +82,7 @@ const NoUser = styled.div`
   margin: 2rem 0;
 `;
 
-let count = 1;
-
 const User = () => {
-  console.log('Render Count : ', count++);
   const theme = useTheme();
   const contextFilter = useContext(FilterContext);
   const [modalStatus, setModalStatus] = useState(false);
@@ -93,31 +90,19 @@ const User = () => {
   const isFiltered = contextFilter?.state.isFiltered;
   const { loading, data } = useQuery(GET_USER);
   const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
-  const {
-    loading: filterLoading,
-    data: filterData,
-    refetch,
-  } = useQuery(GET_USER_BY_ROLE_AND_STATUS, {
-    variables: {
-      role: contextFilter?.state.role,
-      status: contextFilter?.state.status,
-    },
-  });
-
-  const clearFilterHandler = () => {
-    contextFilter?.dispatch({ type: "clearFilter" });
-  };
-
-  const applyFilterHandler = () => {
-    refetch({
+  const { loading: filterLoading, data: filterData } = useQuery(
+    GET_USER_BY_ROLE_AND_STATUS,
+    {
       variables: {
         role: contextFilter?.state.role,
         status: contextFilter?.state.status,
       },
-    });
-    contextFilter?.dispatch({ type: "applyFilter" });
-  };
+    }
+  );
 
+  const clearFilterHandler = () => {
+    contextFilter?.dispatch({ type: "clearFilter" });
+  };
   const closeModalHandler = () => {
     setModalStatus(false);
   };
@@ -133,7 +118,7 @@ const User = () => {
         <FilterTitle>Filter User</FilterTitle>
         <FilterMenu>
           <Select
-           value={contextFilter?.state.role}
+            value={contextFilter?.state.role}
             onChange={(e) =>
               contextFilter?.dispatch({
                 type: "updateRole",
@@ -142,7 +127,7 @@ const User = () => {
             }
           >
             {otherData?.user_role?.map((r: any) => (
-              <option key={r.id} value={r.role} >
+              <option key={r.id} value={r.role}>
                 {r.role}
               </option>
             ))}
