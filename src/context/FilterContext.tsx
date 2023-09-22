@@ -9,7 +9,6 @@ interface SType {
 type Action =
   | { type: "updateRole"; payload: { value: string } }
   | { type: "updateStatus"; payload: { value: string } }
-  | { type: "applyFilter" }
   | {type: "clearFilter"}
 
 const initialState: SType = {
@@ -31,11 +30,6 @@ const reducer = (state: SType, action: Action): SType => {
         ...state,
         isFiltered: true,
         status: action.payload.value,
-      };
-    case "applyFilter":
-      return {
-        ...state,
-        isFiltered: true,
       };
     case "clearFilter":
         return {
