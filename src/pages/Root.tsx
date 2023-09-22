@@ -54,7 +54,7 @@ const Root = () => {
     <ThemeContext.Provider
       value={{ mode: currentMode, modeHandler: toggleMode }}
     >
-      <ToastContainer autoClose={2000} position={'top-center'} />
+      <ToastContainer autoClose={2000} position={"bottom-center"} />
       <Header searchQuery={searchQuery} onSearchChange={searchChangeHandler} />
       <Filter>
         <main style={currentMode === "light" ? lightTheme : darkTheme}>

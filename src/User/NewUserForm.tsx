@@ -14,6 +14,9 @@ import {
   Label,
   InlineLabel,
   Input,
+  InputControlWrapper,
+  InputGroupTitle,
+  Select,
 } from "../Components/Form";
 
 import { toast } from "react-toastify";
@@ -78,121 +81,139 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
   return (
     <FormWrapper>
       <form onSubmit={formSubmitHandler}>
-        <InputWrapper>
-          <Input
-            type="text"
-            placeholder="First Name*"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            type="text"
-            placeholder="Last Name*"
-            required
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Label htmlFor="dob">D.O.B</Label>
-          <Input
-            type="date"
-            placeholder="DOB "
-            required
-            id="dob"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            type="text"
-            placeholder="Age "
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Label htmlFor="gender"> Gender </Label>
-          <div>
+        <InputControlWrapper>
+          <InputGroupTitle>Name</InputGroupTitle>
+          <InputWrapper>
+            <Input
+              type="text"
+              placeholder="First Name*"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="text"
+              placeholder="Last Name*"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </InputWrapper>
+        </InputControlWrapper>
+
+        <InputControlWrapper>
+          <InputGroupTitle>Birth Date & Age</InputGroupTitle>
+          <InputWrapper>
+            <Input
+              type="date"
+              placeholder="DOB "
+              required
+              id="dob"
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="text"
+              placeholder="Age "
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </InputWrapper>
+        </InputControlWrapper>
+
+        <InputControlWrapper>
+          <InputGroupTitle>Gender</InputGroupTitle>
+          <InputWrapper>
             <div>
-              <Input
-                type="radio"
-                id="male"
-                name="gender"
-                value={"Male"}
-                checked={gender === "Male"}
-                onChange={selectGenderHandler}
-              />
-              <InlineLabel htmlFor="male"> Male </InlineLabel>
+              <div>
+                <Input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value={"Male"}
+                  checked={gender === "Male"}
+                  onChange={selectGenderHandler}
+                />
+                <InlineLabel htmlFor="male"> Male </InlineLabel>
+              </div>
+              <div>
+                <Input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value={"Female"}
+                  checked={gender === "Female"}
+                  onChange={selectGenderHandler}
+                />
+                <InlineLabel htmlFor="female"> Female </InlineLabel>
+              </div>
             </div>
-            <div>
-              <Input
-                type="radio"
-                id="female"
-                name="gender"
-                value={"Female"}
-                checked={gender === "Female"}
-                onChange={selectGenderHandler}
-              />
-              <InlineLabel htmlFor="female"> Female </InlineLabel>
-            </div>
-          </div>
-        </InputWrapper>
+          </InputWrapper>
+        </InputControlWrapper>
 
-        <section>
-          <label htmlFor="userRole">User Role:</label>
-          <select
-            id="userRole"
-            name="userRole"
-            value={userRole}
-            onChange={handleUserRoleChange}
-          >
-            {data?.user_role?.map((r: any) => (
-              <option key={r.id} value={r.id}>
-                {r.role}
-              </option>
-            ))}
-          </select>
+        <InputControlWrapper>
+          <InputGroupTitle>Role & Status</InputGroupTitle>
+          <InputWrapper>
+            <InlineLabel>Role</InlineLabel>
+            <Select
+              id="userRole"
+              name="userRole"
+              value={userRole}
+              onChange={handleUserRoleChange}
+            >
+              {data?.user_role?.map((r: any) => (
+                <option key={r.id} value={r.id}>
+                  {r.role}
+                </option>
+              ))}
+            </Select>
+          </InputWrapper>
+          <InputWrapper>
+            <InlineLabel>Status</InlineLabel>
+            <Select
+              id="userStatus"
+              name="userStatus"
+              value={userStatus}
+              onChange={handleUserStatusChange}
+            >
+              {data?.user_status?.map((s: any) => (
+                <option key={s.id} value={s.id}>
+                  {s.status}
+                </option>
+              ))}
+            </Select>
+          </InputWrapper>
+        </InputControlWrapper>
 
-          <label htmlFor="userStatus">User Status:</label>
-          <select
-            id="userStatus"
-            name="userStatus"
-            value={userStatus}
-            onChange={handleUserStatusChange}
-          >
-            {data?.user_status?.map((s: any) => (
-              <option key={s.id} value={s.id}>
-                {s.status}
-              </option>
-            ))}
-          </select>
-        </section>
-
+        <InputControlWrapper>
+          <InputGroupTitle>
+                Contact Info
+            </InputGroupTitle>
+          <InputWrapper>
+            <Input
+              type="email"
+              placeholder="Email Id "
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              type="tel"
+              placeholder="Mobile Number "
+              required
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+            />
+          </InputWrapper>
+        </InputControlWrapper>
         <InputWrapper>
-          <Input
-            type="email"
-            placeholder="Email Id "
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            type="tel"
-            placeholder="Mobile Number "
-            required
-            value={contact}
-            onChange={(e) => setContact(e.target.value)}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Button type="submit" color="green">
+          <Button type="submit" color="#9028df">
             Create
           </Button>
         </InputWrapper>
