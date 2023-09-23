@@ -6,11 +6,18 @@ export const GET_USER = gql`
       id
       first_name
       last_name
+      age
+      dob
+      email
+      contact_number
+      gender
       user_role {
         role
+        id
       }
       user_status {
         status
+        id
       }
     }
   }
@@ -18,10 +25,20 @@ export const GET_USER = gql`
 
 export const GET_USER_BY_ROLE_AND_STATUS = gql`
   query getUserByRoleAndStatus($role: String!, $status: String!) {
-    user(where: {user_role: {role : {_eq: $role}}, user_status: {status: {_eq: $status}} }) {
+    user(
+      where: {
+        user_role: { role: { _eq: $role } }
+        user_status: { status: { _eq: $status } }
+      }
+    ) {
+      id
       first_name
       last_name
-      id
+      age
+      dob
+      email
+      contact_number
+      gender
       user_role {
         role
       }
@@ -67,9 +84,7 @@ export const GET_USER_ROLE_AND_STATUS = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation CreateUser(
-    $input: user_insert_input!
-  ) {
+  mutation CreateUser($input: user_insert_input!) {
     insert_user_one(object: $input) {
       first_name
       last_name
@@ -84,11 +99,32 @@ export const CREATE_USER = gql`
   }
 `;
 
-export const UPDATE_NAME = gql`
-  mutation UpdateName($id: uuid!, $first_name: name!, $last_name: name!) {
+export const UPDATE_USER_INFO = gql`
+  mutation UpdateUserInfo(
+    $id: uuid!
+    $first_name: name!
+    $last_name: name!
+    $age: Int
+    $dob: date!
+    $email: String!
+    $contact_number: String!
+    $gender: String!
+    $role_id: uuid!
+    $status_id: uuid!
+  ) {
     update_user(
       where: { id: { _eq: $id } }
-      _set: { first_name: $first_name, last_name: $last_name }
+      _set: {
+        first_name: $first_name
+        last_name: $last_name
+        age: $age
+        dob: $dob
+        email: $email
+        contact_number: $contact_number
+        gender: $gender
+        role_id: $role_id
+        status_id: $status_id
+      }
     ) {
       affected_rows
     }
