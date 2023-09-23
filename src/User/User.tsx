@@ -180,8 +180,8 @@ const User = () => {
                 last_name={u.last_name}
                 id={u.id}
                 gender={u.gender}
-                role={u.user_role.role}
-                status={u?.user_status?.status}
+                role={u.user_role.id}
+                status={u?.user_status?.id}
                 email={u?.email}
                 contact_number={u?.contact_number}
               />
@@ -196,8 +196,8 @@ const User = () => {
                 first_name={u.first_name}
                 last_name={u.last_name}
                 id={u.id}
-                role={u.user_role.role}
-                status={u?.user_status?.status}
+                role={u.user_role?.id}
+                status={u?.user_status?.id}
                 email={u?.email}
                 contact_number={u?.contact_number}
               />
