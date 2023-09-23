@@ -11,7 +11,6 @@ import Loader from "../Components/Loader";
 import {
   FormWrapper,
   InputWrapper,
-  Label,
   InlineLabel,
   Input,
   InputControlWrapper,

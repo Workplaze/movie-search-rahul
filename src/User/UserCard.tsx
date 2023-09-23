@@ -43,12 +43,17 @@ const UserButtonWrapper = styled(UserCardWrapper)`
 type Props = {
   first_name: string;
   last_name: string;
+  dob: string;
+  age:string;
   role: string;
   status: string;
+  email:string;
+  contact_number: string;
   id: string;
+  gender: string;
 };
 
-const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
+const UserCard = ({ id, first_name, last_name, role, status, dob, email, contact_number, age,gender }: Props) => {
   const theme = useTheme();
   const [modalStatus, setModalStatus] = useState(false);
 
@@ -87,7 +92,7 @@ const UserCard = ({ id, first_name, last_name, role, status }: Props) => {
         {modalStatus && (
           <Modal open={modalStatus} onClose={modalCloseHandler} center>
             <UpdateUserForm
-              defaultValues={{ first_name, last_name }}
+              defaultValues={{ id, first_name, last_name, age, dob , email, role, status, contact_number, gender}}
               closeModal={modalCloseHandler}
               id={id}
             />

@@ -6,17 +6,37 @@ import { toast } from "react-toastify";
 
 import { Button } from "../Components/Button";
 
+type Props = {
+  first_name: string;
+  last_name: string;
+  dob: string;
+  age: string;
+  role: string;
+  status: string;
+  email: string;
+  contact_number: string;
+  id: string;
+  gender: string;
+};
+
 const UpdateUserForm = ({
   id,
   closeModal,
   defaultValues,
 }: {
-  defaultValues: { first_name: string; last_name: string };
+  defaultValues: Props;
   id: string;
   closeModal: () => void;
 }) => {
   const [firstName, setFirstName] = useState(defaultValues.first_name);
   const [lastName, setLastName] = useState(defaultValues.last_name);
+  const [dob, setDob] = useState(defaultValues.dob);
+  const [age, setAge] = useState(defaultValues.age);
+  const [email, setEmail] = useState(defaultValues.email);
+  const [contact, setContact] = useState(defaultValues.contact_number);
+  const [gender, setGender] = useState(defaultValues.gender);
+  const [userRole, setUserRole] = useState(defaultValues.role);
+  const [userStatus, setUserStatus] = useState(defaultValues.status);
 
   const [updateUserName] = useMutation(UPDATE_NAME);
 
