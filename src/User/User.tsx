@@ -174,22 +174,32 @@ const User = () => {
             data?.user?.map((u: any) => (
               <UserCard
                 key={u.id}
+                dob={u.dob}
+                age={u.age}
                 first_name={u.first_name}
                 last_name={u.last_name}
                 id={u.id}
-                role={u.user_role.role}
-                status={u?.user_status?.status}
+                gender={u.gender}
+                role={u.user_role.id}
+                status={u?.user_status?.id}
+                email={u?.email}
+                contact_number={u?.contact_number}
               />
             ))}
           {isFiltered &&
             filterData?.user?.map((u: any) => (
               <UserCard
+                gender={u.gender}
                 key={u.id}
+                dob={u.dob}
+                age={u.age}
                 first_name={u.first_name}
                 last_name={u.last_name}
                 id={u.id}
-                role={u.user_role.role}
-                status={u?.user_status?.status}
+                role={u.user_role?.id}
+                status={u?.user_status?.id}
+                email={u?.email}
+                contact_number={u?.contact_number}
               />
             ))}
           {isFiltered && filterData?.user?.length === 0 && (
