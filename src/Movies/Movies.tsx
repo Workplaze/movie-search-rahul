@@ -1,24 +1,13 @@
-// import useTheme from "../Hooks/useTheme";
 import { FaRegSadCry } from "react-icons/fa";
-
+import { MovieObject } from "../Common/types";
 import MovieCard from "../Components/MovieCard";
 import MoviesTitle from "./MoviesTitle";
-
-interface MovieObject {
-  id: number;
-  name: string;
-  image: string;
-  rating: string;
-  summary: string;
-}
 
 type Props = {
   movies: MovieObject[];
 };
 
 const Movies = ({ movies }: Props) => {
-  // const styles = useTheme();
-
   const MoviesListUi = (
     <section className="moviesContainer">
       {movies?.length !== 0 &&
@@ -29,7 +18,7 @@ const Movies = ({ movies }: Props) => {
               name={movie.name}
               image={movie.image}
               rating={movie.rating}
-              summary={movie.summary}
+              summary={movie.summary?.slice(0, 100)?.concat("...")}
             />
           );
         })}

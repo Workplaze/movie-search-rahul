@@ -16,7 +16,6 @@ a {
   text-decoration: none;
 }
 
-
 a.active {
   border-bottom: #a979ff 4px solid;
 }
@@ -30,7 +29,6 @@ a.active {
 }
 /* Header styles */
 
-
 .searchBar {
   flex: 2;
   display: flex;
@@ -40,7 +38,7 @@ a.active {
   color: black;
   padding: 0.4rem;
   border-radius: 1em;
-  border:2px solid black;
+  border: 2px solid black;
 }
 
 .searchBar input {
@@ -96,50 +94,6 @@ main {
 .moviesTitle {
   margin: 1rem;
   padding: 1rem 0.5rem;
-}
-
-.movieCard {
-  border-radius: 1em;
-  border: 2px solid rgb(255, 255, 255);
-  background: #f2f2f2;
-  transition: all 400ms;
-}
-
-.movieCard:hover,
-.movieCard:active {
-  transform: scale(1.05);
-  border-color: #b8b8b8;
-}
-
-.movieImage {
-  height: 400px;
-}
-
-.movieImage img {
-  width: 100%;
-  height: 100%;
-  border-radius: 1em 1em 0 0;
-}
-
-.movieText {
-  padding: 0.5rem 1rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.movieText h2 {
-  max-height: 400px;
-  font-size: 1rem;
-}
-
-.movieText p {
-  text-transform: capitalize;
-  font-size: 0.6rem;
-}
-
-.movieText h2,
-.movieText p {
-  margin: 0.5rem 0;
 }
 
 .wrapper {
