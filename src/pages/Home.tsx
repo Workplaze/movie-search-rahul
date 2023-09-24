@@ -1,12 +1,11 @@
 import { useOutletContext } from "react-router-dom";
 
-import styled from "styled-components";
 
 import Movies from "../Movies/Movies";
 import useTheme from "../Hooks/useTheme";
 import { V_INFO } from "../util/constant";
 
-
+import styled from "styled-components";
 const HeroWrapper = styled.section<{ $color: string; $bgColor: string }>`
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
