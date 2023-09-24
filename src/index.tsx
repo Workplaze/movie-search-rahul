@@ -5,7 +5,6 @@ import "./index.css";
 import "react-responsive-modal/styles.css";
 
 import App from "./App";
-
 import {
   ApolloClient,
   InMemoryCache,
