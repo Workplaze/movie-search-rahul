@@ -11,6 +11,7 @@ import SearchBar from "./SearchBar";
 import MobileMenu from "./MobileMenu";
 import DesktopMenu from "./DesktopMenu";
 import useTheme from "../Hooks/useTheme";
+import { TopNavigation } from "../Common/UI";
 
 const ThemeIcon = () => {
   const theme = useContext(ThemeContext);
@@ -33,18 +34,18 @@ const Header = ({
   onSearchChange,
 }: {
   searchQuery: string;
-  onSearchChange: any;
+  onSearchChange: (value: string) => void;
 }) => {
   const styles = useTheme();
   const isMobileVersion = useDevice();
 
   return (
-    <header className="globalHeader" style={styles}>
+    <TopNavigation $bgColor={styles.background} $color={styles.color}>
       <Title />
       <SearchBar searchQuery={searchQuery} onSearchChange={onSearchChange} />
       <ThemeIcon />
       {isMobileVersion ? <MobileMenu /> : <DesktopMenu />}
-    </header>
+    </TopNavigation>
   );
 };
 

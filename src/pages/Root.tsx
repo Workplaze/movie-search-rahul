@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { filter } from "../util/filter";
 import { FETCH_ALL_SHOWS } from "../config";
@@ -19,13 +19,13 @@ const Root = () => {
   const [moviesData, setMoviesData] = useState<MovieObject[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<MovieObject[]>([]);
 
-  const searchChangeHandler = (value: string) => {
+  const searchChangeHandler = (value: string): void => {
     const result = filter(moviesData, value);
     setFilteredMovies(result);
     setSearchQuery(value);
   };
 
-  const toggleMode = () => {
+  const toggleMode = (): void => {
     if (currentMode === "light") {
       setCurrentMode("dark");
     } else {
@@ -43,7 +43,7 @@ const Root = () => {
           setFilteredMovies(data);
         }
       } catch (err) {
-        console.log(err);
+        console.log("Unable to Fetch movies ", err);
       }
     };
 
