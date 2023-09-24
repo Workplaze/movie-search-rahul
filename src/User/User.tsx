@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import useTheme from "../Hooks/useTheme";
+import { useState, useContext } from "react";
 
 import { IoCreate } from "react-icons/io5";
-import { FcClearFilters } from "react-icons/fc";
+import { FcClearFilters, FcFilledFilter } from "react-icons/fc";
 
 import {
   GET_USER,
@@ -15,12 +15,12 @@ import { Modal } from "react-responsive-modal";
 import { FilterContext } from "../context/FilterContext";
 
 import UserCard from "./UserCard";
-import NewUserForm from "./NewUserForm";
 import Loader from "../Components/Loader";
 
 import styled from "styled-components";
 import { TextWithIconWrapper } from "../Common/UI";
 import { ButtonAction } from "../Components/Button";
+import InputForm from "./InputForm";
 
 const UserWrapper = styled.section`
   margin: 1rem auto;
@@ -88,7 +88,8 @@ const User = () => {
   const [modalStatus, setModalStatus] = useState(false);
 
   const isFiltered = contextFilter?.state.isFiltered;
-  const { loading, data } = useQuery(GET_USER);
+
+  const { loading, data, error } = useQuery(GET_USER);
   const { data: otherData } = useQuery(GET_USER_ROLE_AND_STATUS);
   const { loading: filterLoading, data: filterData } = useQuery(
     GET_USER_BY_ROLE_AND_STATUS,
@@ -112,6 +113,9 @@ const User = () => {
 
   if (loading || filterLoading) return <Loader />;
 
+  if (error)
+    throw new Response("Unable to fetch user from db", { status: 400 });
+
   return (
     <UserWrapper>
       <FilterWrapper style={theme}>
@@ -126,7 +130,7 @@ const User = () => {
               })
             }
           >
-            {otherData?.user_role?.map((r: any) => (
+            {otherData?.user_role?.map((r: { id: string; role: string }) => (
               <option key={r.id} value={r.role}>
                 {r.role}
               </option>
@@ -141,19 +145,29 @@ const User = () => {
               })
             }
           >
-            {otherData?.user_status?.map((s: any) => (
-              <option key={s.id} value={s.status}>
-                {s.status}
-              </option>
-            ))}
+            {otherData?.user_status?.map(
+              (s: { id: string; status: string }) => (
+                <option key={s.id} value={s.status}>
+                  {s.status}
+                </option>
+              )
+            )}
           </Select>
         </FilterMenu>
         <FilterButtons>
-          <ButtonAction onClick={clearFilterHandler}>
-            <TextWithIconWrapper>
-              <FcClearFilters size={"1.5rem"} /> Clear
-            </TextWithIconWrapper>
-          </ButtonAction>
+          {isFiltered ? (
+            <ButtonAction onClick={clearFilterHandler}>
+              <TextWithIconWrapper>
+                <FcClearFilters size={"1rem"} /> Clear
+              </TextWithIconWrapper>
+            </ButtonAction>
+          ) : (
+            <ButtonAction>
+              <TextWithIconWrapper>
+                <FcFilledFilter size={"1rem"} /> Apply
+              </TextWithIconWrapper>
+            </ButtonAction>
+          )}
         </FilterButtons>
       </FilterWrapper>
       <div>
@@ -163,7 +177,7 @@ const User = () => {
         {modalStatus && (
           <Modal open={modalStatus} onClose={closeModalHandler} center>
             <div>
-              <NewUserForm closeModal={closeModalHandler} />
+              <InputForm title="Create" closeModal={closeModalHandler} />
             </div>
           </Modal>
         )}
@@ -180,8 +194,8 @@ const User = () => {
                 last_name={u.last_name}
                 id={u.id}
                 gender={u.gender}
-                role={u.user_role.id}
-                status={u?.user_status?.id}
+                role={u.user_role}
+                status={u?.user_status}
                 email={u?.email}
                 contact_number={u?.contact_number}
               />
