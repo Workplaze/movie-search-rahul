@@ -109,8 +109,6 @@ export const UPDATE_USER_INFO = gql`
     $email: String!
     $contact_number: String!
     $gender: String!
-    $role_id: uuid!
-    $status_id: uuid!
   ) {
     update_user(
       where: { id: { _eq: $id } }
@@ -122,8 +120,6 @@ export const UPDATE_USER_INFO = gql`
         email: $email
         contact_number: $contact_number
         gender: $gender
-        role_id: $role_id
-        status_id: $status_id
       }
     ) {
       affected_rows

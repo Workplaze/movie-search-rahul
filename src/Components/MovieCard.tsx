@@ -33,6 +33,7 @@ const MovieText = styled.div<{ $bgColor: string; $color: string }>`
   left: 0;
   right: 0;
   padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
   color: ${(props) => props.$color};
   background-color: ${(props) => {
     return props.$bgColor === "#fff" ? "#ffffffe4" : "#000000c1";
@@ -96,7 +97,7 @@ const MovieCard = ({
           <h2>{name}</h2>
           <div dangerouslySetInnerHTML={{ __html: summary }} />
           <MovieRating>
-            <FcRating /> {rating.average} Ratings
+            <FcRating size='1.5rem' /> {rating.average} Ratings
           </MovieRating>
         </MovieText>
       )}
