@@ -1,10 +1,5 @@
-interface MovieObject {
-  id: number;
-  name: string;
-  image: string;
-  rating: string;
-  summary: string;
-}
+import { MovieObject } from "../Common/types";
+
 export const filter = (
   data: MovieObject[],
   searchText: string
