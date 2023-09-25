@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+
+import { useMutation } from "@apollo/client";
 import {
   CREATE_USER,
   GET_USER,
-  GET_USER_ROLE_AND_STATUS,
+  UPDATE_USER_INFO,
+  GET_USER_BY_ID,
 } from "../Queries/queries";
 
-import { Button } from "../Components/Button";
+import { toast } from "react-toastify";
 import Loader from "../Components/Loader";
+
+import { Button } from "../Components/Button";
 import {
   FormWrapper,
   InputWrapper,
@@ -15,42 +19,31 @@ import {
   Input,
   InputControlWrapper,
   InputGroupTitle,
-  Select,
 } from "../Components/Form";
 
-import { toast } from "react-toastify";
+import { Form } from "../Common/types";
 
-const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
+const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
+  //form states
+  const [firstName, setFirstName] = useState<string | undefined>(
+    defaultValues?.first_name
+  );
+  const [lastName, setLastName] = useState<string | undefined>(
+    defaultValues?.last_name
+  );
+  const [dob, setDob] = useState<string | undefined>(defaultValues?.dob);
+  const [age, setAge] = useState<string | undefined>(defaultValues?.age);
+  const [email, setEmail] = useState<string | undefined>(defaultValues?.email);
+  const [contact, setContact] = useState<string | undefined>(
+    defaultValues?.contact_number
+  );
+  const [gender, setGender] = useState<string | undefined>(
+    defaultValues?.gender
+  );
+
+  // creating new user
   const [createNewUser, { loading }] = useMutation(CREATE_USER);
-  const { data } = useQuery(GET_USER_ROLE_AND_STATUS);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dob, setDob] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [userRole, setUserRole] = useState("");
-  const [userStatus, setUserStatus] = useState("");
-
-  const selectGenderHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGender(event.target.value);
-  };
-
-  const handleUserRoleChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setUserRole(event.target.value);
-  };
-
-  const handleUserStatusChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setUserStatus(event.target.value);
-  };
-
-  const formSubmitHandler = (event: any) => {
-    event.preventDefault();
+  const createUserHandler = () => {
     closeModal();
     createNewUser({
       variables: {
@@ -62,8 +55,8 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
           contact_number: contact,
           email: email,
           gender,
-          role_id: userRole,
-          status_id: userStatus,
+          role_id: "d97e22e2-4573-4e6c-a3f4-1893b2fed610",
+          status_id: "af2e74cd-feec-4f08-b703-8eb7d32ff29e",
         },
       },
       refetchQueries: [
@@ -75,11 +68,45 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
     toast.success("Created!");
   };
 
+  // update user
+  const [updateUserInfo] = useMutation(UPDATE_USER_INFO);
+  const updateUserHandler = () => {
+    updateUserInfo({
+      variables: {
+        id,
+        first_name: firstName,
+        last_name: lastName,
+        age,
+        dob,
+        email,
+        contact_number: contact,
+        gender,
+      },
+      refetchQueries: [{ query: GET_USER_BY_ID, variables: { id } }],
+    });
+    closeModal();
+    toast.success("User Info Updated!");
+  };
+
+  const selectGenderHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGender(event.target.value);
+  };
+
+  const formSubmitHandler = (event: any) => {
+    event.preventDefault();
+    if (title === "Create") {
+      createUserHandler();
+    } else {
+      updateUserHandler();
+    }
+  };
+
   if (loading) return <Loader />;
 
   return (
     <FormWrapper>
       <form onSubmit={formSubmitHandler}>
+        <h2> {title} User </h2>
         <InputControlWrapper>
           <InputGroupTitle>Name</InputGroupTitle>
           <InputWrapper>
@@ -155,43 +182,7 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
         </InputControlWrapper>
 
         <InputControlWrapper>
-          <InputGroupTitle>Role & Status</InputGroupTitle>
-          <InputWrapper>
-            <InlineLabel>Role</InlineLabel>
-            <Select
-              id="userRole"
-              name="userRole"
-              value={userRole}
-              onChange={handleUserRoleChange}
-            >
-              {data?.user_role?.map((r: any) => (
-                <option key={r.id} value={r.id}>
-                  {r.role}
-                </option>
-              ))}
-            </Select>
-          </InputWrapper>
-          <InputWrapper>
-            <InlineLabel>Status</InlineLabel>
-            <Select
-              id="userStatus"
-              name="userStatus"
-              value={userStatus}
-              onChange={handleUserStatusChange}
-            >
-              {data?.user_status?.map((s: any) => (
-                <option key={s.id} value={s.id}>
-                  {s.status}
-                </option>
-              ))}
-            </Select>
-          </InputWrapper>
-        </InputControlWrapper>
-
-        <InputControlWrapper>
-          <InputGroupTitle>
-                Contact Info
-            </InputGroupTitle>
+          <InputGroupTitle>Contact Info</InputGroupTitle>
           <InputWrapper>
             <Input
               type="email"
@@ -211,9 +202,10 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
             />
           </InputWrapper>
         </InputControlWrapper>
+
         <InputWrapper>
           <Button type="submit" color="#9028df">
-            Create
+            {title} User
           </Button>
         </InputWrapper>
       </form>
@@ -221,4 +213,4 @@ const NewUserForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default NewUserForm;
+export default InputForm;

@@ -1,12 +1,13 @@
 import { useOutletContext } from "react-router-dom";
 
-import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 import Movies from "../Movies/Movies";
 import useTheme from "../Hooks/useTheme";
-import { V_INFO } from "../util/constant";
+import { V_INFO, V_INFO_Two } from "../util/constant";
 
-
+import styled from "styled-components";
 const HeroWrapper = styled.section<{ $color: string; $bgColor: string }>`
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
@@ -16,6 +17,10 @@ const HeroWrapper = styled.section<{ $color: string; $bgColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const HeroWrapperTwo = styled(HeroWrapper)`
+  background-image: url(${require("../Assets/Banner2.jpg")});
 `;
 
 const HeroContent = styled.div`
@@ -43,14 +48,41 @@ const Home = () => {
   const theme = useTheme();
   return (
     <>
-      <HeroWrapper $bgColor={theme.background} $color={theme.color}>
-        <HeroContent>
-          <h1>
-            V-<span>Enjoy </span>
-          </h1>
-          <p>{V_INFO}</p>
-        </HeroContent>
-      </HeroWrapper>
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={false}
+        modules={[Autoplay]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <HeroWrapper $bgColor={theme.background} $color={theme.color}>
+            <HeroContent>
+              <h1>
+                V-<span>Enjoy </span>
+              </h1>
+              <p>{V_INFO}</p>
+            </HeroContent>
+          </HeroWrapper>
+        </SwiperSlide>
+        <SwiperSlide>
+          <HeroWrapperTwo $bgColor={theme.background} $color={theme.color}>
+            <HeroContent>
+              <h1>
+                V-<span>Enjoy (HINDI) </span>
+              </h1>
+              <p>{V_INFO_Two}</p>
+            </HeroContent>
+          </HeroWrapperTwo>
+        </SwiperSlide>
+      </Swiper>
       <Movies movies={filteredMovies} />
     </>
   );

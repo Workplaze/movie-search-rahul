@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import "swiper/css";
 import "./index.css";
 import "react-responsive-modal/styles.css";
 
 import App from "./App";
-
 import {
   ApolloClient,
   InMemoryCache,

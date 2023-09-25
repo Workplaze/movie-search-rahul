@@ -5,7 +5,7 @@ const SearchBar = ({
   onSearchChange,
 }: {
   searchQuery: string;
-  onSearchChange: any;
+  onSearchChange: (value: string) => void;
 }) => {
   return (
     <div className="searchBar">
