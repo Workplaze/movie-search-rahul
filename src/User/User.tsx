@@ -111,8 +111,6 @@ const User = () => {
     setModalStatus(true);
   };
 
-  if (loading || filterLoading) return <Loader />;
-
   if (error)
     throw new Response("Unable to fetch user from db", { status: 400 });
 
@@ -182,45 +180,48 @@ const User = () => {
           </Modal>
         )}
       </div>
-      <div>
-        <UL>
-          {!isFiltered &&
-            data?.user?.map((u: any) => (
-              <UserCard
-                key={u.id}
-                dob={u.dob}
-                age={u.age}
-                first_name={u.first_name}
-                last_name={u.last_name}
-                id={u.id}
-                gender={u.gender}
-                role={u.user_role}
-                status={u?.user_status}
-                email={u?.email}
-                contact_number={u?.contact_number}
-              />
-            ))}
-          {isFiltered &&
-            filterData?.user?.map((u: any) => (
-              <UserCard
-                gender={u.gender}
-                key={u.id}
-                dob={u.dob}
-                age={u.age}
-                first_name={u.first_name}
-                last_name={u.last_name}
-                id={u.id}
-                role={u.user_role?.id}
-                status={u?.user_status?.id}
-                email={u?.email}
-                contact_number={u?.contact_number}
-              />
-            ))}
-          {isFiltered && filterData?.user?.length === 0 && (
-            <NoUser>Sorry, No User Found!</NoUser>
-          )}
-        </UL>
-      </div>
+      {loading || filterLoading ? <Loader /> : null}
+      {!loading && !filterLoading && (
+        <div>
+          <UL>
+            {!isFiltered &&
+              data?.user?.map((u: any) => (
+                <UserCard
+                  key={u.id}
+                  dob={u.dob}
+                  age={u.age}
+                  first_name={u.first_name}
+                  last_name={u.last_name}
+                  id={u.id}
+                  gender={u.gender}
+                  role={u.user_role}
+                  status={u?.user_status}
+                  email={u?.email}
+                  contact_number={u?.contact_number}
+                />
+              ))}
+            {isFiltered &&
+              filterData?.user?.map((u: any) => (
+                <UserCard
+                  gender={u.gender}
+                  key={u.id}
+                  dob={u.dob}
+                  age={u.age}
+                  first_name={u.first_name}
+                  last_name={u.last_name}
+                  id={u.id}
+                  role={u.user_role?.id}
+                  status={u?.user_status?.id}
+                  email={u?.email}
+                  contact_number={u?.contact_number}
+                />
+              ))}
+            {isFiltered && filterData?.user?.length === 0 && (
+              <NoUser>Sorry, No User Found!</NoUser>
+            )}
+          </UL>
+        </div>
+      )}
     </UserWrapper>
   );
 };
