@@ -40,6 +40,10 @@ const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
   const [gender, setGender] = useState<string | undefined>(
     defaultValues?.gender
   );
+  const [role, setRole] = useState<string | undefined>(defaultValues?.role?.id);
+  const [status, setStatus] = useState<string | undefined>(
+    defaultValues?.status?.id
+  );
 
   // creating new user
   const [createNewUser, { loading }] = useMutation(CREATE_USER);
@@ -55,8 +59,8 @@ const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
           contact_number: contact,
           email: email,
           gender,
-          role_id: "d97e22e2-4573-4e6c-a3f4-1893b2fed610",
-          status_id: "af2e74cd-feec-4f08-b703-8eb7d32ff29e",
+          role_id: role,
+          status_id: status,
         },
       },
       refetchQueries: [
@@ -81,6 +85,8 @@ const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
         email,
         contact_number: contact,
         gender,
+        role_id: role,
+        status_id: status,
       },
       refetchQueries: [{ query: GET_USER_BY_ID, variables: { id } }],
     });
@@ -90,6 +96,12 @@ const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
 
   const selectGenderHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender(event.target.value);
+  };
+  const selectRoleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRole(event.target.value);
+  };
+  const selectStatusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus(event.target.value);
   };
 
   const formSubmitHandler = (event: any) => {
@@ -176,6 +188,64 @@ const InputForm = ({ title, closeModal, defaultValues, id }: Form) => {
                   onChange={selectGenderHandler}
                 />
                 <InlineLabel htmlFor="female"> Female </InlineLabel>
+              </div>
+            </div>
+          </InputWrapper>
+        </InputControlWrapper>
+        <InputControlWrapper>
+          <InputGroupTitle>Select Your Role</InputGroupTitle>
+          <InputWrapper>
+            <div>
+              <div>
+                <Input
+                  type="radio"
+                  id="free"
+                  name="role"
+                  value={"d97e22e2-4573-4e6c-a3f4-1893b2fed610"}
+                  checked={role === "d97e22e2-4573-4e6c-a3f4-1893b2fed610"}
+                  onChange={selectRoleHandler}
+                />
+                <InlineLabel htmlFor="free"> Free </InlineLabel>
+              </div>
+              <div>
+                <Input
+                  type="radio"
+                  id="premium"
+                  name="role"
+                  value={"4057b265-0ec2-45cb-8c2e-a32a6b0be8e8"}
+                  checked={role === "4057b265-0ec2-45cb-8c2e-a32a6b0be8e8"}
+                  onChange={selectRoleHandler}
+                />
+                <InlineLabel htmlFor="premium"> Premium </InlineLabel>
+              </div>
+            </div>
+          </InputWrapper>
+        </InputControlWrapper>
+        <InputControlWrapper>
+          <InputGroupTitle>Select Your Status</InputGroupTitle>
+          <InputWrapper>
+            <div>
+              <div>
+                <Input
+                  type="radio"
+                  id="guest"
+                  name="status"
+                  value={"af2e74cd-feec-4f08-b703-8eb7d32ff29e"}
+                  checked={status === "af2e74cd-feec-4f08-b703-8eb7d32ff29e"}
+                  onChange={selectStatusHandler}
+                />
+                <InlineLabel htmlFor="guest"> Guest </InlineLabel>
+              </div>
+              <div>
+                <Input
+                  type="radio"
+                  id="registered"
+                  name="status"
+                  value={"8a16e62a-5157-4edf-8380-e9b3d5d8152c"}
+                  checked={status === "8a16e62a-5157-4edf-8380-e9b3d5d8152c"}
+                  onChange={selectStatusHandler}
+                />
+                <InlineLabel htmlFor="registered"> Registered </InlineLabel>
               </div>
             </div>
           </InputWrapper>

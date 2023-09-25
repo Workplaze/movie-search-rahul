@@ -194,8 +194,8 @@ const User = () => {
                   last_name={u.last_name}
                   id={u.id}
                   gender={u.gender}
-                  role={u.user_role}
-                  status={u?.user_status}
+                  role={u.user_role?.id}
+                  status={u?.user_status?.id}
                   email={u?.email}
                   contact_number={u?.contact_number}
                 />
