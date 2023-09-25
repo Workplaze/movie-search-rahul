@@ -11,8 +11,8 @@ type DefaultValues = {
   last_name: string;
   dob: string;
   age: string;
-  role: string;
-  status: string;
+  role: any;
+  status: any;
   email: string;
   contact_number: string;
   id: string;
